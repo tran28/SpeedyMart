@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import axios from 'axios'
+import Home from './components/home'
 const baseUrl = '/api/products'
 
 const App = () => {
@@ -15,13 +17,12 @@ const App = () => {
   }, [])
 
   return (
-    <div>
-      <h1>Welcome to SpeedyMart</h1>
-      <h2>Look at all these products we are selling:</h2>
-
-      <pre>{JSON.stringify(products,null,2)}</pre>
-
-    </div>
+    <Router>
+      <Routes>
+        {/* M: Every page must have a route with an exact path and an element (component)*/}
+        <Route exact path="/" element={<Home />} />
+      </Routes>
+    </Router>
   )
 }
 

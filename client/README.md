@@ -1,2 +1,0 @@
-# SpeedyMart Frontend
-Using React
