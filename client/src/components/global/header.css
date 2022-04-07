@@ -1,0 +1,136 @@
+:root {
+    --accent: #d8655c;
+    --accent-dark: #cb463c;
+    --dark: #2e343a;
+}
+
+body {
+    background: white;
+    margin: 0;
+}
+
+.banner-container {
+    background: var(--accent);
+    padding: 1em;
+    color: white;
+    text-align: center;
+}
+
+.banner-container.span{
+    font-weight: bold;
+    padding-right: 0;
+}
+
+.navbar {
+    padding: 1em;
+    padding-left: 2.5em;
+    padding-right: 2.5em;
+}
+
+.navbar-container {
+    display: flex;
+    place-content: space-between;
+    position: relative;
+    z-index: 10;
+}
+
+.menu-container{
+    display: flex;
+    cursor: pointer;
+}
+
+.menu-icon {
+    height: 1.4em;
+    padding-right: 0.4em;
+}
+
+.menu-icon-text{
+    display: none;
+}
+
+.navbar-logo {
+    text-decoration: none;
+    font-weight: bold;
+    color: var(--dark);
+    font-size: 2.2em;
+}
+
+.account-icon {
+    cursor: pointer;
+    height: 1.8em;
+}
+
+.cart-icon {
+    cursor: pointer;
+    height: 1.8em;
+    margin-left: 0.8em;
+}
+
+.nav-menu {
+    background: var(--accent-dark);
+    position: fixed;
+    top: 0;
+    height: 100vh;
+    z-index: 20;
+    left: -100%;
+    transition: 850ms;
+}
+
+.nav-menu.active {
+    left: 0;
+    transition: 350ms;
+}
+
+.nav-item {
+    padding: 0.3em 0 0.3em 1em;
+    list-style: none;
+    text-align: left;
+    width: 10em;
+    justify-content: start;
+    font-size: 1.4em;
+    transform: translateX(-20px);
+}
+
+.nav-item:hover {
+    background: var(--accent);
+    border-radius: 1em;
+}
+
+.navbar-toggle {
+    padding: 1em 0 1em 0;
+    list-style: none;
+    text-align: left;
+    width: 14em;
+    justify-content: start;
+    font-size: 1em;
+    transform: translateX(-20px);
+    cursor: pointer;
+}
+
+.nav-links {
+    text-decoration: none;
+    color: white;
+}
+
+@media screen and (min-width: 1080px) {
+    .banner-container {
+        padding: 1em 3em 1em 3em;
+    }
+
+    .navbar {
+        padding-right: 2.6em;
+        padding-left: 2.6em;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+    }
+
+    .menu-icon-text{
+        display: flex;
+        color: var(--dark);
+    }
+}
+
+.lock-scroll {
+    overflow: hidden;
+}
