@@ -16,7 +16,7 @@ let products = [
   },
   {
     id: 2,
-    content: "This is a shoe or something",
+    content: "This is a shoe or something1",
   },
   {
     id: 3,
