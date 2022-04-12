@@ -1,64 +1,96 @@
 :root {
-    --accent: #d8655c;
-    --dark: #2e343a;
-    --backdrop: #f2f0ee;
+    --backdrop: #f3f0ee;
 }
 
-.container{
+.content-section {
     margin: 1.5em;
-    padding: 5em 2em;
-    text-align: center;
     background: var(--backdrop);
-    transform: translateY(-100px);
+    display: flex;
+    text-align: center;
+    transform: translateY(-60px);
+    justify-content: center;
 }
 
-.image-container{
-    width: 80%;
-    margin-top: 3em;
+.image-container {
+    width: 100%;
 }
 
-.title{
+.left-col {
+    padding-top: 4em;
+    padding-bottom: 3em;
+}
+
+.title {
+    margin: 0;
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
+    font-family: var(--daytona-altfont);
     font-weight: bold;
-    font-size: 3.4em;
+    font-size: 3em;
     color: var(--dark);
 }
 
-.price-from{
-    font-size: 1.8em;
-    color: var(--accent);
+.price-from {
+    margin: 0;
+    margin-top: 0.2em;
+    margin-bottom: 1.2em;
+    font-size: 1.4em;
+    font-family: var(--menlo-altfont);
+    color: var(--accent-dark);
 }
 
-.cta-buy{
-    background-color: var(--accent);
-    color: white;
+.cta-buy {
+    color: var(--dark);
     text-decoration: none;
     padding: 0.6em 1.3em;
-    font-size: 1.2em;
+    font-size: 1em;
+    font-family: var(--daytona-altfont);
+    font-weight: bold;
     border-radius: 5em;
+    border-style: solid;
+    border-width: 0.2em;
+    border-color: var(--dark);
     display: inline-block;
 }
 
-@media screen and (min-width: 920px) {
+.cta-buy:hover {
+    opacity: 50%;
+}
 
-    .container{
-        width: 920px;
-        margin: 1.5em auto;
-        padding: 10em 2em;
+@media screen and (min-width: 720px) {
+    .container {
+        padding: 5em 3em 3em 3em;
         display: flex;
         justify-content: space-between;
         text-align: left;
     }
 
-    .left-col{
-        margin: 3em 3em 0 5em;
+    .left-col {
+        padding-top: 2em;
+        padding-right: 2em;
     }
 
-    .image-container{
-        width: 50%;
-        margin-right: 5em;
+    .image-container {
+        width: 70%;
+        border-radius: 3em;
+    }
+}
+
+@media screen and (min-width: 1080px) {
+    .container {
+        width: 920px;
+        padding: 8em 6em 6em 8em;
+        display: flex;
+        justify-content: space-between;
+        text-align: left;
     }
 
-    .title{
-        font-size: 4em;
+    .left-col {
+        padding-top: 5em;
+    }
+
+    .image-container {
+        width: 70%;
+        border-radius: 3em;
     }
 }

@@ -1,0 +1,152 @@
+:root {
+    --accent: #d8655c;
+    --accent-dark: #cb463c;
+    --dark: #3f4752;
+    --menlo-altfont: 'Courier New', Courier, monospace;
+    --daytona-altfont: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background: white;
+    margin: 0;
+}
+
+.banner-container {
+    background: var(--accent);
+    padding: 1em;
+    color: white;
+    text-align: center;
+    font-family: var(--menlo-altfont);
+}
+
+.navbar {
+    padding: 1em;
+    padding-left: 2.5em;
+    padding-right: 2.5em;
+}
+
+.navbar-container {
+    display: flex;
+    place-content: space-between;
+    position: relative;
+    z-index: 10;
+}
+
+.menu-container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.menu-icon {
+    height: 1.4em;
+    padding-right: 0.4em;
+}
+
+.menu-icon-text {
+    display: none;
+}
+
+.navbar-logo {
+    text-decoration: none;
+    font-weight: bold;
+    color: var(--dark);
+    font-size: 2em;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+}
+
+.account-icon {
+    cursor: pointer;
+    padding-top: 0.3em;
+}
+
+.cart-icon {
+    cursor: pointer;
+    margin-left: 0.6em;
+}
+
+.nav-menu {
+    background: var(--accent-dark);
+    position: fixed;
+    top: 0;
+    height: 100vh;
+    z-index: 20;
+    left: -100%;
+    transition: 850ms;
+}
+
+.nav-menu.active {
+    left: 0;
+    transition: 350ms;
+}
+
+.nav-item {
+    padding: 0.4em 1em 0.4em 1em;
+    list-style: none;
+    text-align: left;
+    width: 8em;
+    justify-content: start;
+    font-size: 1.5em;
+    transform: translateX(-20px);
+}
+
+.nav-item:hover {
+    background: var(--accent);
+    border-radius: 1em;
+}
+
+.menu-close {
+    padding: 1em 0 1em 0;
+    list-style: none;
+    justify-content: start;
+    transform: translateX(-20px);
+    cursor: pointer;
+}
+
+.nav-links {
+    text-decoration: none;
+    color: white;
+    font-family: var(--daytona-altfont);
+    display: flex;
+}
+
+.nav-cart {
+    background: var(--footer-dark);
+    position: fixed;
+    top: 0;
+    height: 100vh;
+    width: 25em;
+    z-index: 20;
+    right: -100%;
+    transition: 850ms;
+}
+
+.nav-cart.active {
+    right: 0;
+    transition: 350ms;
+}
+
+@media screen and (min-width: 1080px) {
+    .banner-container {
+        padding: 1em 3em 1em 3em;
+    }
+
+    .navbar {
+        padding-right: 2.6em;
+        padding-left: 2.6em;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+    }
+
+    .menu-icon-text {
+        font-weight: bold;
+        font-family: var(--daytona-altfont);
+        display: flex;
+        color: var(--dark);
+    }
+}
