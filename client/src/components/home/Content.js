@@ -7,12 +7,12 @@ function Content(props) {
             <section className="content-section">
                 <div className="container">
                     <div className="left-col">
-                        <h1 className="title">{props.title}</h1>
-                        <p className="price-from">From <span>{props.price_from}</span></p>
+                        <div className="title">{props.title}</div>
+                        <div className="price-from">From {props.price_from}</div>
                         <Link className="cta-buy" to={props.link}>Shop {props.title.toLowerCase()}</Link>
                     </div>
 
-                    <img className="image-container" src={props.image} alt="product image" />
+                    <img className="image-container" src={props.image} alt={props.description} />
                 </div>
             </section>
         </>

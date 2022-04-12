@@ -6,8 +6,8 @@ function Footer() {
         <div className="footer-container">
         </div>
         <div className="credits-container">
-            <div className="text">© Copyright 2022.</div>
-            <div className="text">@York University</div>
+            <div className="text">© copyright 2022. speedymart.</div>
+            <div className="text">dev team</div>
         </div>
     </>
     );

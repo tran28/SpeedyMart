@@ -3,25 +3,22 @@
     --footer-darker: #2a2d32;
 }
 
-body {
-    background: white;
-    margin: 0;
-}
-
-.footer-container{
+.footer-container {
     background: var(--footer-dark);
     display: flex;
     height: 100px;
 }
 
-.credits-container{
+.credits-container {
     background: var(--footer-darker);
-    padding: 0.6em 1.2em 0.6em 1.2em;
+    padding: 1.2em 1.4em 1.2em 1.4em;
     display: flex;
     place-content: space-between;
     position: relative;
+    font-size: 0.9em;
+    font-family: var(--menlo-altfont);
 }
 
-.text{
+.text {
     color: white;
 }
