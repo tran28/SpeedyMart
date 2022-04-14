@@ -112,4 +112,32 @@ productRoute.delete(
   })
 );
 
+// Add product review by product id
+productRoute.post(
+  "/:id/review",
+  asyncHandler(async (req, res) => {
+    const { rating, comment } = req.body;
+    const product = await Product.findById(req.params.id);
+
+    if (product) {
+      // Create review
+      const review = {
+        rating: Number(rating),
+        comment
+      };
+      if (review) {
+        product.reviews.push(review);
+        product.numReviews = product.reviews.length;
+        // find average reviews
+        product.rating = product.reviews.reduce((acc, item) => item.rating + acc, 0) / product.reviews.length;
+        await product.save();
+        res.status(201).json({ message: "Review added to '" + product.name + "'!" });
+      } else {
+        res.status(404);
+        throw new Error("Product not Found");
+      }
+    }
+  })
+);
+
 export default productRoute;
