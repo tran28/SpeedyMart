@@ -9,21 +9,6 @@ import productRoute from './routes/ProductRoutes.js';
 const app = express()
 dotenv.config();
 
-let products = [
-  {
-    id: 1,
-    content: "This is a product located on the backend",
-  },
-  {
-    id: 2,
-    content: "This is a shoe or something1",
-  },
-  {
-    id: 3,
-    content: "This is a shirt",
-  }
-]
-
 // Use Cross-Origin Resource Sharing to allow resources from other origins
 app.use(cors())
 
