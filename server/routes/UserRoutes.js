@@ -43,9 +43,33 @@ userRoute.post(
       });
     } else {
       res.status(400);
-      throw new Error("Invalid User Data");
+      throw new Error("Invalid user data");
     }
   })
 );
+
+// Login
+userRoute.post(
+    "/login",
+    asyncHandler(async (req, res) => {
+      const { email, password } = req.body;
+      // Check if user exists
+      const user = await User.findOne({ email });
+      // Authenticate based on password
+      if (user && (await user.matchPassword(password))) {
+        res.json({
+          _id: user._id,
+          name: user.name,
+          email: user.email,
+          isAdmin: user.isAdmin,
+          token: generateToken(user._id),
+          createdAt: user.createdAt,
+        });
+      } else {
+        res.status(401);
+        throw new Error("Invalid email or password! Please try again.");
+      }
+    })
+  );
 
 export default userRoute;

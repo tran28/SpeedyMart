@@ -6,6 +6,7 @@ const protect = asyncHandler(async (req, res, next) => {
   let token;
 
   if (
+    // Check that header has auth token starting with Bearer
     req.headers.authorization &&
     req.headers.authorization.startsWith("Bearer")
   ) {
@@ -28,12 +29,12 @@ const protect = asyncHandler(async (req, res, next) => {
 });
 
 const admin = (req, res, next) => {
-  // Check if user has admin attribute
+  // Check if user has the admin attribute
   if (req.user && req.user.isAdmin) {
     next();
   } else {
     res.status(401);
-    throw new Error("Not authorized as an Admin");
+    throw new Error("Not authorized as an admin user!");
   }
 };
 
