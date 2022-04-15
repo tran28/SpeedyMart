@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 // import axios from 'axios'
 import Home from './components/home'
@@ -21,11 +20,6 @@ const App = () => {
   //       setProducts(response.data)
   //     })
   // }, [])
-
-  /* M: Change title of website from React's default title*/
-  useEffect(() => {
-    document.title = "SpeedyMart"
-  }, []);
 
   return (
     <Router>
