@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "SpeedyMart",
   "scripts": {
-    "start": "node server",
+    "start": "node server/server.js",
     "build": "cd client/ && npm install && npm run build",
     "logs": "heroku logs --tail"
   },

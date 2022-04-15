@@ -5,24 +5,10 @@ import connectDatabase from './db/MongoDB.js'
 import dotenv from "dotenv";
 import {fileURLToPath} from 'url';
 import productRoute from './routes/ProductRoutes.js';
+import userRoute from './routes/UserRoutes.js'
 
 const app = express()
 dotenv.config();
-
-let products = [
-  {
-    id: 1,
-    content: "This is a product located on the backend",
-  },
-  {
-    id: 2,
-    content: "This is a shoe or something",
-  },
-  {
-    id: 3,
-    content: "This is a shirt",
-  }
-]
 
 // Use Cross-Origin Resource Sharing to allow resources from other origins
 app.use(cors())
@@ -40,6 +26,7 @@ app.use(express.static(path.resolve(__dirname, '../client/build')));
 
 // Answer API requests.
 app.use("/api/products", productRoute);
+app.use("/api/users", userRoute);
 
 // All remaining requests return the React app, so it can handle routing.
 app.get('*', function(request, response) {
