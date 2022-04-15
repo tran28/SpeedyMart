@@ -1,34 +1,46 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./login.css"
+import "./account.css"
 var axios = require('axios');
 
 function Login() {
     let navigate = useNavigate();
 
+    // set of states to keep track of email, password
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [loginError, setLoginError] = useState("");
+
+    const loginAttempt = () => {
+        // let loginSuccess = false;
+        // setLoginError("Incorrect email or password.")
+        // return loginSuccess;
+    }
+
     const handleSubmit = e => {
         e.preventDefault();
         e.stopPropagation();
 
+        const loginSuccess = loginAttempt();
+
         // login user
         var data = JSON.stringify({
-            "email": "a@a.com",
-            "password": "pass123"
-          });
+            "email": email,    
+            "password": password,
+        });
         var config = {
             method: 'post',
             url: '/api/users/login',
-            headers: { 
+            headers: {
                 'Content-Type': 'application/json'
             },
-            data : data
-          };
+            data: data
+        };
         axios(config)
-          .then(res => {
-            localStorage.setItem("jwtToken", "Bearer " + res.data.token)
-            //console.log(res.data)
-          })
-
-        navigate("/account");
+            .then(res => {
+                localStorage.setItem("jwtToken", "Bearer " + res.data.token)
+                console.log(res.data)
+            })
     };
 
     const handleClick = () => {
@@ -39,6 +51,8 @@ function Login() {
         <>
             <div className="main-container">
                 <div className="boxes">
+
+                    {/* M: This is top 'Already Registered' block */}
                     <div className="box" id="login">
                         <div className="left">
                             <h2>Already Registered</h2>
@@ -47,15 +61,32 @@ function Login() {
                             <h3>start new session</h3>
                             <div className="row">
                                 <form method="post" action="/account/login" onSubmit={handleSubmit}>
+
+                                    {/* M: This is the 'email' input */}
                                     <div className="row">
-                                        <input className="text-long" type="email" id="customer_email" placeholder="Email" />
+                                        <input className="text-long" type="email" id="customer_email" placeholder="Email" value={email} onChange={e => {
+                                            setEmail(e.target.value);
+                                            setLoginError("");
+                                        }} />
                                     </div>
+
+                                    {/* M: This is the 'password' input */}
                                     <div className="row">
-                                        <input className="text-long" type="password" id="customer_password" placeholder="Password" />
+                                        <input className="text-long" type="password" id="customer_password" placeholder="Password" value={password} onChange={e => {
+                                            setPassword(e.target.value)
+                                            setLoginError("");
+                                        }} />
                                     </div>
+
+                                    {/* M: This is the 'loginError' output
+                                        Error shows up if email and/or password does not match database
+                                    */}
+                                    <h3 >{loginError}</h3>
+
+                                    {/* M: This is the 'Sign in' button */}
                                     <div className="button-wrapper">
                                         <button className="button" type="submit">
-                                            <span>Sign In</span>
+                                            <span>Sign in</span>
                                         </button>
                                     </div>
                                 </form>
@@ -63,12 +94,15 @@ function Login() {
                         </div>
                     </div>
 
+                    {/* M: This is bottom 'New Customer' block */}
                     <div className="box" id="register">
                         <div className="left">
                             <h2>New Customer</h2>
                         </div>
                         <div className="right">
                             <h3>create new account</h3>
+
+                            {/* M: This is the 'Register' button */}
                             <div className="button-wrapper">
                                 <button className="button" onClick={handleClick}>
                                     <span>Register</span>
