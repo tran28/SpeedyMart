@@ -51,4 +51,32 @@ orderRoute.get(
   })
 );
 
+// Get current user's orders
+orderRoute.get(
+  "/",
+  protect,
+  asyncHandler(async (req, res) => {
+    const order = await Order.find({ user: req.user._id }).sort({ _id: -1 });
+    res.json(order);
+  })
+);
+
+// Get order by id
+orderRoute.get(
+  "/:id",
+  protect,
+  asyncHandler(async (req, res) => {
+    const order = await Order.findById(req.params.id).populate(
+      "user",
+      "name email"
+    );
+    if (order) {
+      res.json(order);
+    } else {
+      res.status(404);
+      throw new Error("Order not found!");
+    }
+  })
+);
+
 export default orderRoute;
