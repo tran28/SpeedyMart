@@ -16,7 +16,7 @@ function Login() {
           });
         var config = {
             method: 'post',
-            url: 'http://localhost:5000/api/users/login',
+            url: '/api/users/login',
             headers: { 
                 'Content-Type': 'application/json'
             },
