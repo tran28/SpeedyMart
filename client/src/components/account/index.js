@@ -8,7 +8,8 @@ function Account() {
         var config = {
             method: 'get',
             url: '/api/users/profile',
-            headers: { 
+            headers: {
+              'Content-Type': 'application/json',
               'Authorization': localStorage.getItem('jwtToken')
             }
           };
