@@ -7,7 +7,7 @@ function Account() {
     useEffect(() => {
         var config = {
             method: 'get',
-            url: '/api/users',
+            url: '/api/users/profile',
             headers: { 
               'Authorization': localStorage.getItem('jwtToken')
             }
@@ -16,15 +16,20 @@ function Account() {
           axios(config)
             .then(res => {
             setData(res.data)
-            //console.log(res.data)
+            console.log(res.data)
           })
       }, [])
 
     return (
         <>
             <h1>Account Page</h1>
-            <h2>derp</h2>
-            {data.map((user)=> <p key={user.email}>{user.email} {user.name} {user._id} </p>)}
+            <h3>Here's some info about the current user:</h3>
+            <p>_id: {data._id}</p>
+            <p>name: {data.name}</p>
+            <p>email: {data.email}</p>
+            <p>isAdmin: {data.isAdmin ? "true" : "false"}</p>
+            <p>createdAt: {data.createdAt}</p>
+            
         </>
     );
 }
