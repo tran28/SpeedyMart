@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import "./login.css"
+var axios = require('axios');
 
 function Login() {
     let navigate = useNavigate();
@@ -7,6 +8,26 @@ function Login() {
     const handleSubmit = e => {
         e.preventDefault();
         e.stopPropagation();
+
+        // login user
+        var data = JSON.stringify({
+            "email": "a@a.com",
+            "password": "pass123"
+          });
+        var config = {
+            method: 'post',
+            url: 'http://localhost:5000/api/users/login',
+            headers: { 
+                'Content-Type': 'application/json'
+            },
+            data : data
+          };
+        axios(config)
+          .then(res => {
+            localStorage.setItem("jwtToken", "Bearer " + res.data.token)
+            //console.log(res.data)
+          })
+
         navigate("/account");
     };
 

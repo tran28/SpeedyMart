@@ -2,6 +2,7 @@ import express from "express";
 import asyncHandler from "express-async-handler";
 import generateToken from "../util/GenerateToken.js";
 import User from "./../models/UserModel.js";
+import { protect, admin } from "../util/AuthUtil.js";
 
 const userRoute = express.Router();
 
@@ -9,6 +10,7 @@ const userRoute = express.Router();
 // ** add authentication to this later!! **
 userRoute.get(
     "/",
+    protect,
     asyncHandler(async (req, res) => {
       const users = await User.find({});
       res.json(users);
