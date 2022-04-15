@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./account.css"
-var axios = require('axios');
 
 function Login() {
     let navigate = useNavigate();
@@ -11,21 +10,14 @@ function Login() {
     const [password, setPassword] = useState("");
     const [loginError, setLoginError] = useState("");
 
-    const loginAttempt = () => {
-        // let loginSuccess = false;
-        // setLoginError("Incorrect email or password.")
-        // return loginSuccess;
-    }
-
     const handleSubmit = e => {
         e.preventDefault();
         e.stopPropagation();
 
-        const loginSuccess = loginAttempt();
-
         // login user
+        var axios = require('axios');
         var data = JSON.stringify({
-            "email": email,    
+            "email": email,
             "password": password,
         });
         var config = {
@@ -38,9 +30,14 @@ function Login() {
         };
         axios(config)
             .then(res => {
-                localStorage.setItem("jwtToken", "Bearer " + res.data.token)
-                console.log(res.data)
+                console.log(res.data);
+                localStorage.setItem("jwtToken", "Bearer " + res.data.token);
+                navigate("/account");
             })
+            .catch(err => {
+                console.log(err);
+                setLoginError("Incorrect email or password.");
+            });
     };
 
     const handleClick = () => {

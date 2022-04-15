@@ -10,12 +10,18 @@ function Register() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+    const [nameError, setNameError] = useState("");
     const [emailError, setEmailError] = useState("");
     const [passwordError, setPasswordError] = useState("");
 
     // validate function to be used in handleSubmit function
     const validate = () => {
         let isValid = true;
+        if (!name) {
+            setNameError("name can't be blank")
+            document.getElementById("create_name").style.background = "#f1c7c3";
+            isValid = false;
+        }
         if (!email) {
             setEmailError("email can't be blank")
             document.getElementById("create_email").style.background = "#f1c7c3";
@@ -37,7 +43,30 @@ function Register() {
         // validate form
         const isValid = validate();
         if (isValid) {
-            navigate("/account/login");
+            var axios = require('axios');
+            var data = JSON.stringify({
+                "name": name,
+                "email": email,
+                "password": password,
+            });
+
+            var config = {
+                method: 'post',
+                url: '/api/users/',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: data
+            };
+
+            axios(config)
+                .then(res => {
+                    console.log(res.data);
+                    navigate("/account/login");
+                })
+                .catch(err => {
+                    console.log(err)
+                });
         }
         else {
             console.log({
@@ -64,8 +93,13 @@ function Register() {
 
                                     {/* M: This is the 'name' input */}
                                     <div className="row">
-                                        <input className="text-long" type="text" id="create_name" placeholder="Name" value={name} onChange={e => setName(e.target.value)} />
+                                        <input className="text-long" type="text" id="create_name" placeholder="Name" value={name} onChange={e => {
+                                            setName(e.target.value);
+                                            e.target.style.background = "white";
+                                            setNameError("");
+                                        }} />
                                     </div>
+                                    <h3 >{nameError}</h3>
 
                                     {/* M: This is the 'email' input
                                         Error shows up and input box turns red when 'email' is blank.
