@@ -21,6 +21,15 @@ const userSchema = mongoose.Schema(
       required: true,
       default: false,
     },
+    address: {
+      street: { type: String, required: false },
+      unit: { type: String, required: false },
+      city: { type: String, required: false },
+      province: { type: String, required: false },
+      postalCode: { type: String, required: false },
+      country: { type: String, required: false },
+    },
+    
   },
   {
     timestamps: true,
