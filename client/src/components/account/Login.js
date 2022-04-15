@@ -48,7 +48,6 @@ function Login() {
         <>
             <div className="main-container">
                 <div className="boxes">
-
                     {/* M: This is top 'Already Registered' block */}
                     <div className="box" id="login">
                         <div className="left">

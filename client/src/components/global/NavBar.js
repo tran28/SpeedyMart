@@ -74,7 +74,7 @@ function NavBar() {
                         </Link>
                     </li>
                     <li className="nav-item" onClick={closeMenu}>
-                        <Link to="/account/login" className="nav-links">
+                        <Link to="/account" className="nav-links">
                             account
                         </Link>
                     </li>

@@ -1,38 +1,78 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import "./account.css"
 
 function Account() {
-    const [data, setData] = useState([])
+  const [data, setData] = useState([])
 
-    useEffect(() => {
-        var config = {
-            method: 'get',
-            url: '/api/users/profile',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': localStorage.getItem('jwtToken')
-            }
-          };
-          
-          axios(config)
-            .then(res => {
-            setData(res.data)
-            console.log(res.data)
-          })
-      }, [])
+  useEffect(() => {
+    var config = {
+      method: 'get',
+      url: '/api/users/profile',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': localStorage.getItem('jwtToken')
+      }
+    };
 
-    return (
-        <>
-            <h1>Account Page</h1>
-            <h3>Here's some info about the current user:</h3>
-            <p>_id: {data._id}</p>
-            <p>name: {data.name}</p>
-            <p>email: {data.email}</p>
-            <p>isAdmin: {data.isAdmin ? "true" : "false"}</p>
-            <p>createdAt: {data.createdAt}</p>
-            
-        </>
-    );
+    axios(config)
+      .then(res => {
+        setData(res.data)
+        console.log(res.data)
+      })
+  }, [])
+
+  return (
+    <>
+      <div className='main-container'>
+        <div className='boxes'>
+          <div className='box' id='account-info'>
+            <div className='left'>
+              <h2>Your Account Information</h2>
+            </div>
+            <div className='right'>
+              <div className='row'>
+                {/* M: Display account 'name' and 'email'*/}
+                <div className='row'>
+                  <p className='user-info'>
+                    account created by&nbsp;
+                    <span className='highlight'>{data.name}</span>
+                    <br />
+                    with email&nbsp;
+                    <span className='highlight'>{data.email}</span>
+                  </p>
+                </div>
+
+                {/* M: Display account 'address'*/}
+                <div className='row'>
+                  <p className='user-info'>
+                    the default address is&nbsp;
+                    <span className='highlight'>{/* add data.address here */}</span><br />
+                  </p>
+                </div>
+
+                {/* M: This is the 'Edit Addresses' button */}
+                <div className="button-wrapper">
+                  <button className="button" onClick={""}>
+                    <span>Edit Addresses</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className='box' id='orders'>
+            <div className="left">
+              <h2>Your Orders</h2>
+            </div>
+            <div className="right">
+              <h3>append orders here</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
 }
 
 export default Account;

@@ -95,6 +95,21 @@ span {
     font-size: 1.2em;
 }
 
+.user-info{
+    font-family: var(--menlo-altfont);
+    font-size: 1.2em;
+    line-height: 1.5em;
+    color: var(--dark);
+}
+
+.highlight{
+    font-size: 0.9em;
+    padding: 0.2em 0.4em 0.2em 0.4em;
+    font-family: var(--menlo-altfont);
+    color: var(--dark);
+    background: white;
+}
+
 @media screen and (min-width: 720px) {
     .box {
         display: block;
