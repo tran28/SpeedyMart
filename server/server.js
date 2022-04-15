@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 import {fileURLToPath} from 'url';
 import productRoute from './routes/ProductRoutes.js';
 import userRoute from './routes/UserRoutes.js'
+import orderRoute from './routes/OrderRoutes.js';
 
 const app = express()
 dotenv.config();
@@ -27,6 +28,7 @@ app.use(express.static(path.resolve(__dirname, '../client/build')));
 // Answer API requests.
 app.use("/api/products", productRoute);
 app.use("/api/users", userRoute);
+app.use("/api/orders", orderRoute);
 
 // All remaining requests return the React app, so it can handle routing.
 app.get('*', function(request, response) {

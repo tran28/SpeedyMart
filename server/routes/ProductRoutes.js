@@ -46,7 +46,7 @@ productRoute.get(
 productRoute.post(
   "/",
   asyncHandler(async (req, res) => {
-    const { name, price, description, image, countInStock } = req.body;
+    const { name, price, description, image, brand, category, countInStock } = req.body;
     const existingProduct = await Product.findOne({ name });
     if (!existingProduct) {
       // Create a new product
@@ -55,6 +55,8 @@ productRoute.post(
         price,
         description,
         image,
+        brand,
+        category,
         countInStock,
       });
       if (product) {
@@ -77,7 +79,7 @@ productRoute.post(
 productRoute.put(
   "/:id",
   asyncHandler(async (req, res) => {
-    const { name, price, description, image, countInStock } = req.body;
+    const { name, price, description, image, brand, category, countInStock } = req.body;
     const product = await Product.findById(req.params.id);
     if (product) {
       // if product is found then update it with information from the body.
@@ -86,6 +88,8 @@ productRoute.put(
       product.price = price || product.price;
       product.description = description || product.description;
       product.image = image || product.image;
+      product.brand = brand || product.brand;
+      product.category = category || product.category;
       product.countInStock = countInStock || product.countInStock;
       const updatedProduct = await product.save();
       res.json(updatedProduct);
