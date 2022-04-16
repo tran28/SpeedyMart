@@ -9,9 +9,9 @@ function Shop() {
     useEffect(() => {
         var axios = require('axios');
         const fetchProducts = async () => {
-            const res = await axios.get('/api/products');
-            const { products: myproducts } = res.data;
-            setProductsFromAPI(myproducts);
+            const res = await axios.get('/api/products/all');
+            console.log(res.data)
+            setProductsFromAPI(res.data);
             setLoading(false)
         }
 

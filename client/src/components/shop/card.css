@@ -2,20 +2,28 @@
     transition: 0.3s;
     margin-bottom: 1em;
     background: white;
+    display: flex;
+    flex-direction:column; 
+    justify-content:space-between;
 }
 
 .card-container:hover {
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.4);
 }
 
-.card-bottom {
+.card-row-image {
+    padding: 0;
+    text-align: center;
+}
+
+.card-row {
     padding: 0;
     text-align: left;
 }
 
 .card-image {
-    max-width: 100%;
-    max-height: 100%;
+    max-width: 300px;
+    max-height: 400px;
     object-fit: contain;
 }
 
