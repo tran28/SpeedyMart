@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import "./account.css"
+import { useNavigate } from 'react-router-dom'
 
 function Account() {
+  let navigate = useNavigate();
   const [data, setData] = useState([])
 
   useEffect(() => {
@@ -20,7 +22,11 @@ function Account() {
         setData(res.data)
         console.log(res.data)
       })
-  }, [])
+  }, []);
+
+  const handleClick = () => {
+    navigate("/account/addresses");
+  };
 
   return (
     <>
@@ -53,7 +59,7 @@ function Account() {
 
                 {/* M: This is the 'Edit Addresses' button */}
                 <div className="button-wrapper">
-                  <button className="button" onClick={""}>
+                  <button className="button" onClick={handleClick}>
                     <span>Edit Addresses</span>
                   </button>
                 </div>
