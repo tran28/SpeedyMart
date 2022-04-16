@@ -7,7 +7,7 @@
     justify-content:space-between;
 }
 
-.card-container:hover {
+.card-container:hover{
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.4);
 }
 
@@ -28,6 +28,14 @@
 }
 
 .card-text {
+    padding: 0.6em;
+    background: var(--accent);
+    font-family: var(--menlo-altfont);
+    color: white;
+}
+
+.card-price {
+    transition: 0.3s;
     padding: 0.6em;
     background: var(--accent);
     font-family: var(--menlo-altfont);

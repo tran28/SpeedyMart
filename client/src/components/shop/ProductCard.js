@@ -12,7 +12,7 @@ function ProductCard(props) {
                         <div className="card-text"><b>{props.name}</b></div>
                     </div>
                     <div className="card-row">
-                        <div className="card-text">Price: {props.price}</div>
+                        <div className="card-text" id="price">Price: ${props.price}</div>
                     </div>
                 </div>
             </div>
