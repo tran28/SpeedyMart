@@ -9,6 +9,8 @@ import Account from './components/account'
 import Login from './components/account/Login'
 import PrivateRoute from './PrivateRoute'
 import Addresses from './components/account/Addresses'
+import Item from './components/item'
+import ErrorPage from './components/global/ErrorPage'
 // const baseUrl = '/api/products'
 
 const App = () => {
@@ -36,8 +38,9 @@ const App = () => {
         <Route exact path="/account/login" element={<Login />} />
         <Route exact path="/account/register" element={<Register />} />
         <Route exact path="/shop" element={<Shop />} />
+        <Route exact path="/shop/:productId" element={<Item />} />
         <Route exact path="/checkout" element={<Checkout />} />
-
+        <Route exact path="*" element={<ErrorPage />} />
       </Routes>
 
     </Router>
