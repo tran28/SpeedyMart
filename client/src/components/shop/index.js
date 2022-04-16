@@ -1,41 +1,35 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProductCard from "./ProductCard";
-import { ProductData } from "./ProductData";
 import "./shop.css"
 
 function Shop() {
-    // let products = [];
+    const [productsFromAPI, setProductsFromAPI] = useState([]);
+    const [isLoading, setLoading] = useState(true);
 
-    // // get products
-    // var axios = require('axios');
-    // var config = {
-    //     method: 'get',
-    //     url: '/api/products',
-    //     headers: {
-    //         'Content-Type': 'application/json'
-    //     },
-    // };
-    // axios(config)
-    //     .then(res => {
-    //         // object destructuring
-    //         const { products: myproducts } = res.data;
-    //         products = myproducts;
-    //         console.log(products);
-    //     })
-    //     .catch(err => {
-    //         console.log(err);
-    //     });
+    useEffect(() => {
+        var axios = require('axios');
+        const fetchProducts = async () => {
+            const res = await axios.get('/api/products');
+            const { products: myproducts } = res.data;
+            setProductsFromAPI(myproducts);
+            setLoading(false)
+        }
+
+        fetchProducts();
+    }, []);
 
     // map through Product JSON and get all brands and categories
-    var brands = ProductData.map((value) => value.brand).filter((value, index, _arr) => _arr.indexOf(value) === index);
-    var categories = ProductData.map((value) => value.category).filter((value, index, _arr) => _arr.indexOf(value) === index);
+    var brands = productsFromAPI.map((value) => value.brand).filter((value, index, _arr) => _arr.indexOf(value) === index);
+    var categories = productsFromAPI.map((value) => value.category).filter((value, index, _arr) => _arr.indexOf(value) === index);
 
     // sort the brands and categories by alphabetical order to be appended to the selectBox
     const brandSorted = brands.sort();
     const categorySorted = categories.sort();
 
     // filter function to be called whenever selectBox is changed (selection is made)
-    const [products, setProducts] = useState(ProductData);
+    const [products, setProducts] = useState(productsFromAPI);
+    console.log(productsFromAPI)
+
     function filterProducts() {
         // get the selectBox using id
         var selectBox = document.getElementById("filter");
@@ -44,7 +38,7 @@ function Shop() {
         // get the label of the 'optgroup' corresponding to the 'option' selection
         var optionGroup = selectBox.options[selectBox.selectedIndex].parentNode.label;
 
-        const result = ProductData.filter((currentProduct) => {
+        const result = productsFromAPI.filter((currentProduct) => {
             // filter by 'brand'
             if (optionGroup === 'brand') {
                 return currentProduct.brand === selectedValue;
@@ -89,13 +83,18 @@ function Shop() {
                                     </optgroup>
                                 </select>
                             </div>
+                            <div className="shop-button-wrapper">
+                                <button className="shop-button" onClick={filterProducts}>
+                                    <span>Load Catalogue</span>
+                                </button>
+                            </div>
                         </div>
 
                         <div className="shop-right">
                             {/* M: map through 'productData' array and append all products as 'ProductCard' */}
                             {products.map((item) => {
                                 return (
-                                    <ProductCard key={item.id} {...item} />
+                                    < ProductCard key={item._id} {...item} />
                                 )
                             })}
                         </div>
