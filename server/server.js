@@ -7,6 +7,7 @@ import {fileURLToPath} from 'url';
 import productRoute from './routes/ProductRoutes.js';
 import userRoute from './routes/UserRoutes.js'
 import orderRoute from './routes/OrderRoutes.js';
+import newrelic from 'newrelic';
 
 const app = express()
 dotenv.config();
