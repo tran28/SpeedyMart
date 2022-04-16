@@ -73,6 +73,24 @@ productRoute.get(
   })
 );
 
+// Get all products (no pageination)
+productRoute.get(
+  "/all",
+  asyncHandler(async (req, res) => {
+    const keyword = req.query.keyword
+      ? {
+          name: {
+            $regex: req.query.keyword,
+            $options: "i",
+          },
+        }
+      : {};
+    const products = await Product.find({ ...keyword })
+      .sort({ _id: -1 });
+    res.json(products);
+  })
+);
+
 // Get a single product by id
 productRoute.get(
   "/:id",
