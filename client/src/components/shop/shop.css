@@ -28,22 +28,22 @@
 
 .filter-label {
     font-family: var(--menlo-altfont);
-    color: var(--accent-dark);
     font-style: italic;
-    font-weight: lighter;
-    font-size: 1.4em;
+    color: var(--dark);
+    font-size: 1.8em;
     margin: 0.6em 0 0.6em 0;
 }
 
 select {
     font-family: var(--menlo-altfont);
-    background: var(--accent);
-    padding: 0.8em 1.2em 0.8em 1.2em;
+    background: var(--dark);
+    padding: 0.4em;
     text-align: left;
     font-weight: bold;
+    font-size: 1em;
     color: white;
-    border-radius: 1em;
     border-width: 0;
+    border-radius: 0.2em;
 }
 
 .shop-button-wrapper {
@@ -76,7 +76,7 @@ button {
     }
 
     .shop-left {
-        display: inline-block;
+        display: block;
         justify-content: center;
         float: left;
         width: 20%;
