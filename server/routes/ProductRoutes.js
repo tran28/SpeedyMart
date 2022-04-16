@@ -27,6 +27,52 @@ productRoute.get(
   })
 );
 
+// Get all products by brand
+productRoute.get(
+  "/brand",
+  asyncHandler(async (req, res) => {
+    const pageSize = 12;
+    const page = Number(req.query.pageNumber) || 1;
+    const keyword = req.query.keyword
+      ? {
+          brand: {
+            $regex: req.query.keyword,
+            $options: "i",
+          },
+        }
+      : {};
+    const count = await Product.countDocuments({ ...keyword });
+    const products = await Product.find({ ...keyword })
+      .limit(pageSize)
+      .skip(pageSize * (page - 1))
+      .sort({ _id: -1 });
+    res.json({ products, page, pages: Math.ceil(count / pageSize) });
+  })
+);
+
+// Get all products by brand
+productRoute.get(
+  "/category",
+  asyncHandler(async (req, res) => {
+    const pageSize = 12;
+    const page = Number(req.query.pageNumber) || 1;
+    const keyword = req.query.keyword
+      ? {
+          category: {
+            $regex: req.query.keyword,
+            $options: "i",
+          },
+        }
+      : {};
+    const count = await Product.countDocuments({ ...keyword });
+    const products = await Product.find({ ...keyword })
+      .limit(pageSize)
+      .skip(pageSize * (page - 1))
+      .sort({ _id: -1 });
+    res.json({ products, page, pages: Math.ceil(count / pageSize) });
+  })
+);
+
 // Get a single product by id
 productRoute.get(
   "/:id",
