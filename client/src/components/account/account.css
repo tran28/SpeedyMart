@@ -110,6 +110,27 @@ span {
     background: white;
 }
 
+.warning-h3 {
+    font-size: 1em;
+}
+
+.button-link-flex{
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 1.6em;
+}
+
+.button-link-text{
+    font-family: var(--menlo-altfont);
+    padding-right: 0.5em;
+}
+
+.button-link{
+    cursor: pointer;
+    font-family: var(--menlo-altfont);
+    text-decoration: underline;
+}
+
 @media screen and (min-width: 720px) {
     .box {
         display: block;
