@@ -190,13 +190,13 @@ userRoute.put(
         const itemInCart = user.cart.find(item => JSON.stringify(item.product._id) === JSON.stringify(product._id));
         if(itemInCart) {
           // If product already in the cart, increment qty
-          itemInCart.qty += 1;
+          itemInCart.qty += req.body.qty || 1;
           //res.json(itemInCart)
         } else {
           // else add as a new item to cart
           user.cart.push({
             name: product.name,
-            qty: 1,
+            qty: req.body.qty || 1,
             image: product.image,
             price: product.price,
             product: product._id,
@@ -231,12 +231,13 @@ userRoute.put(
         const itemInCart = user.cart.find(item => JSON.stringify(item.product._id) === JSON.stringify(product._id));
         if(itemInCart){
           // Item exists in cart
-          if(itemInCart.qty > 1) {
-            // If more than one of the item in the cart then decrement qty
-            itemInCart.qty -= 1;
-          } else {
+          if(itemInCart.qty <= (req.body.qty || 1)) {
             // Remove entirely from cart
             user.cart = user.cart.filter(item => JSON.stringify(item.product._id) !== JSON.stringify(product._id))
+            
+          } else {
+            // If more than one of the item in the cart then decrement qty
+            itemInCart.qty -= req.body.qty || 1;
           }
         } else {
           // Item is not in cart
