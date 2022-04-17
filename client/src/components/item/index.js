@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import "./item.css"
 import { useEffect, useState } from "react";
-import Reviews from "./reviews";
+import Review from "./review";
 
 function Item() {
     // M: get the parameter from the URL to call the 'get single product by ID' (API)
@@ -11,6 +11,7 @@ function Item() {
     let navigate = useNavigate();
 
     const [single_item, setSingleItem] = useState([]);
+    const [allReviews, setAllReviews] = useState([]);
 
     useEffect(() => {
         var axios = require('axios');
@@ -22,29 +23,57 @@ function Item() {
             }
         };
         axios(config)
-            .then(function (response) {
-                setSingleItem(response.data);
+            .then(function (res) {
+                console.log(res.data)
+                setSingleItem(res.data);
+
+                const { reviews } = res.data;
+                setAllReviews(reviews);
             })
-            .catch(function (error) {
-                console.log(error);
+            .catch(function (err) {
+                console.log(err);
             });
     }, [productId]);
 
-    function handleSubtract() {
+    const handleSubtract = () => {
         if (parseInt(document.getElementById("quantity").value) > 1) {
             document.getElementById("quantity").value = parseInt(document.getElementById("quantity").value) - 1;
         }
     }
 
-    function handleAdd() {
+    const handleAdd = () => {
         if (parseInt(document.getElementById("quantity").value) < single_item.countInStock) {
             document.getElementById("quantity").value = parseInt(document.getElementById("quantity").value) + 1;
         }
     }
 
-    function handleAddToCart() {
-        if(localStorage.getItem("jwtToken") === null){
+    const handleAddToCart = () => {
+        if (localStorage.getItem("jwtToken") === null) {
             navigate("/account/login");
+        }
+        else {
+            var axios = require('axios');
+            var data = JSON.stringify({
+                "qty": document.getElementById("quantity").value,
+            });
+
+            var config = {
+                method: 'put',
+                url: '/api/users/cart/add/' + productId,
+                headers: {
+                    'Authorization': localStorage.getItem("jwtToken"),
+                    'Content-Type': 'application/json'
+                },
+                data: data
+            };
+
+            axios(config)
+                .then(function (response) {
+                    console.log(JSON.stringify(response.data));
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
         }
     }
 
@@ -83,8 +112,16 @@ function Item() {
 
                         {/* Reviews  */}
                         <div className="box">
-                            <div className="item-review">Number of Reviews: {single_item.numReviews}</div>
-                            <Reviews></Reviews>
+                            <div className="reviews-main-container">
+                                <div className="review-count-container">
+                                    <h3 className="review-count">Average Rating: {single_item.rating}/5 ({single_item.numReviews} reviews)</h3>
+                                </div>
+                                {allReviews.map((item) => {
+                                    return (
+                                        <Review key={item._id} {...item}></Review>
+                                    )
+                                })}
+                            </div>
                         </div>
                     </div>
                 </div>
