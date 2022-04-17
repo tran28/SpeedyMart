@@ -107,7 +107,7 @@ input[type=number]::-webkit-inner-spin-button {
     -moz-appearance: textfield !important;
 }
 
-.slider-button{
+.slider-button {
     border: 3px var(--dark) solid;
     background: var(--dark);
     padding: 0.4em 0.6em 0.4em 0.6em;
@@ -116,11 +116,18 @@ input[type=number]::-webkit-inner-spin-button {
     font-weight: bold;
     font-size: 1.2em;
 }
+
 .slider-button:hover {
     cursor: pointer;
 }
 
-.item-review {}
+.review-count {
+    font-family: var(--menlo-altfont);
+    color: var(--dark);
+    font-size: 1em;
+    font-style: normal;
+    font-weight: bold;
+}
 
 @media screen and (min-width: 720px) {
     .box {
@@ -153,5 +160,10 @@ input[type=number]::-webkit-inner-spin-button {
 
     .add-cart-button {
         padding: 0.4em 2em 0.4em 2em;
+    }
+
+    .reviews-main-container{
+        margin-left: 15vw;
+        margin-right: 15vw;
     }
 }

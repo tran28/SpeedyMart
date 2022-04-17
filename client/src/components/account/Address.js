@@ -1,4 +1,4 @@
-function Addresses() {
+function Address() {
     return (
         <>
             <h1>Address Edit Page</h1>
@@ -6,4 +6,4 @@ function Addresses() {
     );
 }
 
-export default Addresses;
+export default Address;
