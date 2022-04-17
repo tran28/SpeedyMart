@@ -185,18 +185,19 @@ userRoute.put(
     if (user) {
       // if user exists then update with new data
       const product = await Product.findById(req.params.id);
+      const newQty = parseInt(req.body.qty);
       if (product) {
         // Product exists in shop, add 1 qty to the user cart
         const itemInCart = user.cart.find(item => JSON.stringify(item.product._id) === JSON.stringify(product._id));
         if(itemInCart) {
           // If product already in the cart, increment qty
-          itemInCart.qty += req.body.qty || 1;
+          itemInCart.qty += newQty || 1;
           //res.json(itemInCart)
         } else {
           // else add as a new item to cart
           user.cart.push({
             name: product.name,
-            qty: req.body.qty || 1,
+            qty: newQty || 1,
             image: product.image,
             price: product.price,
             product: product._id,
@@ -226,18 +227,19 @@ userRoute.put(
     if (user) {
       // if user exists then update with new data
       const product = await Product.findById(req.params.id);
+      const newQty = parseInt(req.body.qty);
       if (product) {
         // Product exists in shop, remove 1 qty to the user cart
         const itemInCart = user.cart.find(item => JSON.stringify(item.product._id) === JSON.stringify(product._id));
         if(itemInCart){
           // Item exists in cart
-          if(itemInCart.qty <= (req.body.qty || 1)) {
+          if(itemInCart.qty <= (newQty || 1)) {
             // Remove entirely from cart
             user.cart = user.cart.filter(item => JSON.stringify(item.product._id) !== JSON.stringify(product._id))
             
           } else {
             // If more than one of the item in the cart then decrement qty
-            itemInCart.qty -= req.body.qty || 1;
+            itemInCart.qty -= newQty || 1;
           }
         } else {
           // Item is not in cart
