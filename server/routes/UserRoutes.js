@@ -3,6 +3,7 @@ import asyncHandler from "express-async-handler";
 import generateToken from "../util/GenerateToken.js";
 import User from "./../models/UserModel.js";
 import { protect, admin } from "../util/AuthUtil.js";
+import Product from "./../models/ProductModel.js";
 
 const userRoute = express.Router();
 
@@ -168,6 +169,89 @@ userRoute.put(
         isAdmin: updatedUser.isAdmin,
         cart: updatedUser.cart,
       });
+    } else {
+      res.status(404);
+      throw new Error("User not found!");
+    }
+  })
+);
+
+// Add one item to user cart based on id
+userRoute.put(
+  "/cart/add/:id",
+  protect,
+  asyncHandler(async (req, res) => {
+    const user = await User.findById(req.user._id);
+    if (user) {
+      // if user exists then update with new data
+      const product = await Product.findById(req.params.id);
+      if (product) {
+        // Product exists in shop, add 1 qty to the user cart
+        const itemInCart = user.cart.find(item => JSON.stringify(item.product._id) === JSON.stringify(product._id));
+        if(itemInCart) {
+          // If product already in the cart, increment qty
+          itemInCart.qty += req.body.qty || 1;
+          //res.json(itemInCart)
+        } else {
+          // else add as a new item to cart
+          user.cart.push({
+            name: product.name,
+            qty: req.body.qty || 1,
+            image: product.image,
+            price: product.price,
+            product: product._id,
+          })
+        }
+
+        const updatedUser = await user.save();
+        res.json(updatedUser.cart);
+
+      } else {
+        res.status(404);
+        throw new Error("Product not found!");
+      }
+    } else {
+      res.status(404);
+      throw new Error("User not found!");
+    }
+  })
+);
+
+// Remove one item to user cart based on id
+userRoute.put(
+  "/cart/remove/:id",
+  protect,
+  asyncHandler(async (req, res) => {
+    const user = await User.findById(req.user._id);
+    if (user) {
+      // if user exists then update with new data
+      const product = await Product.findById(req.params.id);
+      if (product) {
+        // Product exists in shop, remove 1 qty to the user cart
+        const itemInCart = user.cart.find(item => JSON.stringify(item.product._id) === JSON.stringify(product._id));
+        if(itemInCart){
+          // Item exists in cart
+          if(itemInCart.qty <= (req.body.qty || 1)) {
+            // Remove entirely from cart
+            user.cart = user.cart.filter(item => JSON.stringify(item.product._id) !== JSON.stringify(product._id))
+            
+          } else {
+            // If more than one of the item in the cart then decrement qty
+            itemInCart.qty -= req.body.qty || 1;
+          }
+        } else {
+          // Item is not in cart
+          res.status(404);
+          throw new Error("Product is not in the current user's cart!");
+        }
+
+        const updatedUser = await user.save();
+        res.json(updatedUser.cart);
+
+      } else {
+        res.status(404);
+        throw new Error("Product not found!");
+      }
     } else {
       res.status(404);
       throw new Error("User not found!");
