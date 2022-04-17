@@ -1,32 +1,77 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import * as FaIcons from "react-icons/fa"
 import * as AiIcons from "react-icons/ai"
 import "./header.css"
-import Cart from "../checkout/Cart";
-import { CartData } from "../checkout/CartData";
+import CartItem from "../checkout/CartItem";
 
 function NavBar() {
-    /* M: useState to control menu icon click */
     const [menuClick, setMenuClick] = useState(false);
+    const [cartClick, setCartClick] = useState(false);
+    const [subtotal, setSubtotal] = useState(0);
+    const [cartFilled, setCartFilled] = useState(false);
+    const [cart, setCart] = useState([]);
+
+    /* M: useState to control menu icon click */
     const handleMenuClick = () => {
         setMenuClick(!menuClick);
         closeCart();
+        document.body.classList.add("stop-scrolling");
     }
     const closeMenu = () => {
         setMenuClick(false);
+        document.body.classList.remove("stop-scrolling");
     }
 
     /* M: useState to control cart icon click */
-    const [cartClick, setCartClick] = useState(false);
     const handleCartClick = () => {
         setCartClick(!cartClick);
         closeMenu();
+        document.body.classList.add("stop-scrolling");
     }
     const closeCart = () => {
         setCartClick(false);
+        document.body.classList.remove("stop-scrolling");
     }
 
+    // M: 'axios' call to get the user's cart
+    useEffect(() => {
+        var axios = require('axios');
+        var config = {
+            method: 'get',
+            url: '/api/users/cart',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem('jwtToken')
+            }
+        };
+        axios(config)
+            .then(function (res) {
+                const { cart } = res.data;
+                setCart(cart);
+                calculateSubtotal(cart);
+            })
+            .catch(function (err) {
+                console.log(err);
+            });
+    }, []);
+
+    function calculateSubtotal(props) {
+        // M: calculate subtotal using reduce() iff the cart is not empty
+        if(props.length > 0){
+            props.reduce(() => {
+                const subTotal = props.reduce(
+                    (acc, item) => acc + (item.price * item.qty),
+                    0
+                );
+                setSubtotal(subTotal.toFixed(2));
+
+                // M: if subtotal is greater than 0 -> cart has item(s) -> 'cartFilled' state is 'true'
+                if(subTotal > 0) setCartFilled(true);
+                return subTotal;
+            })
+        }
+    }
 
     return (
         <>
@@ -63,18 +108,18 @@ function NavBar() {
                     <li className="menu-close">
                         <AiIcons.AiOutlineClose color="white" size="22px" onClick={closeMenu} />
                     </li>
-                    <li className="nav-item" onClick={closeMenu}>
-                        <Link to="/" className="nav-links">
+                    <li className="nav-item">
+                        <Link to="/" className="nav-links" onClick={closeMenu}>
                             home
                         </Link>
                     </li>
-                    <li className="nav-item" onClick={closeMenu}>
-                        <Link to="/shop" className="nav-links">
+                    <li className="nav-item">
+                        <Link to="/shop" className="nav-links" onClick={closeMenu}>
                             shop
                         </Link>
                     </li>
-                    <li className="nav-item" onClick={closeMenu}>
-                        <Link to="/account" className="nav-links">
+                    <li className="nav-item">
+                        <Link to="/account" className="nav-links" onClick={closeMenu}>
                             account
                         </Link>
                     </li>
@@ -83,16 +128,35 @@ function NavBar() {
 
             {/* M: Navbar cart icon toggle*/}
             <nav className={cartClick ? "nav-cart active" : "nav-cart"}>
-                <div className="cart-close">
-                    <AiIcons.AiOutlineClose color="white" size="22px" onClick={closeCart} />
+                <div className="cart-container">
+                    <div className="cart-top">
+                        <div className="cart-header-container">
+                            <h2 className="your-cart-h2">Your Cart</h2>
+                            <AiIcons.AiOutlineClose className="cart-close-icon" color="white" size="26px" onClick={closeCart} />
+                        </div>
+                        <div className={cartFilled ? "cart-none" : "cart-no-item-message"}>
+                            <h3 className="cart-h3-empty">your cart is currently empty.</h3>
+                        </div>
+                        <div className="cart-items">
+                            {/* M: Map through the 'cart' JSON array and populate cart sidebar (when clicking cart icon in navbar)*/}
+                            {cart.map((item) => {
+                                return (
+                                    <CartItem key={item._id} {...item} />
+                                )
+                            })}
+                        </div>
+                    </div>
+                    <div className={cartFilled ? "cart-bottom" : "cart-none"}>
+                        <div className="subtotal">
+                            <h2 className="subtotal-h2">Subtotal</h2>
+                            <h2 className="subtotal-h2">${subtotal}</h2>
+                        </div>
+                        <div className="ship-tax-container">
+                            <h3 className="cart-h3">shipping & taxes calculated at checkout.</h3>
+                        </div>
+                        <button className="check-out-button">Check out</button>
+                    </div>
                 </div>
-
-                {/* M: Map through the 'CartData' JSON array and populate cart sidebar (when clicking cart icon in navbar)*/}
-                {CartData.map((item) => {
-                    return (
-                        <Cart key={item.id} {...item} />
-                    )
-                })}
             </nav>
         </>
     );
