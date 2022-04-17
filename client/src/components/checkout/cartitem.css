@@ -30,7 +30,7 @@
 }
 
 .item-name-h3 {
-    color: var(--accent);
+    color: grey;
     font-size: 1.2em;
     font-style: normal;
     margin: 0em 0 0.4em 0;
@@ -55,4 +55,10 @@
 
 .item-removed {
     display: none;
+}
+
+.quantity-number{
+    text-align: center;
+    font-family: var(--menlo-altfont);
+    color: white;
 }
