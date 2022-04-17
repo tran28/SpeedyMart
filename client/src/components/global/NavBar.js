@@ -11,8 +11,6 @@ function NavBar(props) {
     const [cartFilled, setCartFilled] = useState(false);
     const [cart, setCart] = useState([]);
 
-    console.log(props);
-
     /* M: useState to control menu icon click */
     const handleMenuClick = () => {
         setMenuClick(!menuClick);
