@@ -1,35 +1,80 @@
 import "./cartitem.css"
 import * as AiIcons from "react-icons/ai"
-import { useState } from "react";
 
 function CartItem(props) {
-    const [itemRemoved, setItemRemoved] = useState(false);
-    var axios = require('axios');
-
     function handleRemoveCartItem() {
-        setItemRemoved(true);
+        var axios = require('axios');
+        var data = JSON.stringify({
+            "qty": 999999,
+        });
+
+        var config = {
+            method: 'put',
+            url: '/api/users/cart/remove/' + props.product,
+            headers: {
+                'Authorization': localStorage.getItem("jwtToken"),
+                'Content-Type': 'application/json'
+            },
+            data: data
+        };
+
+        axios(config)
+            .then(function (response) {
+                console.log(JSON.stringify(response.data));
+                props.setCartUpdate(!props.cartUpdate);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 
     const handleSubtract = () => {
-        if (parseInt(document.getElementById("quantity" + props._id).value) > 1) {
-            // document.getElementById("quantity" + props._id).value = parseInt(document.getElementById("quantity" + props._id).value) - 1;
-            var data = JSON.stringify({
-                "qty": 1
-            });
+        var axios = require('axios');
+        var data = JSON.stringify({
+            "qty": 1,
+        });
 
+        var config = {
+            method: 'put',
+            url: '/api/users/cart/remove/' + props.product,
+            headers: {
+                'Authorization': localStorage.getItem("jwtToken"),
+                'Content-Type': 'application/json'
+            },
+            data: data
+        };
+
+        axios(config)
+            .then(function (response) {
+                console.log(JSON.stringify(response.data));
+                props.setCartUpdate(!props.cartUpdate);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
+    const handleAdd = () => {
+        if (parseInt(document.getElementById("quantity" + props._id).value) < 100) {
+            var axios = require('axios');
+            var data = JSON.stringify({
+                "qty": 1,
+            });
+    
             var config = {
                 method: 'put',
-                url: '/api/users/cart/remove/' + props._id,
+                url: '/api/users/cart/add/' + props.product,
                 headers: {
                     'Authorization': localStorage.getItem("jwtToken"),
                     'Content-Type': 'application/json'
                 },
                 data: data
             };
-
+    
             axios(config)
                 .then(function (response) {
                     console.log(JSON.stringify(response.data));
+                    props.setCartUpdate(!props.cartUpdate);
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -37,15 +82,9 @@ function CartItem(props) {
         }
     }
 
-    const handleAdd = () => {
-        if (parseInt(document.getElementById("quantity" + props._id).value) < 100) {
-            document.getElementById("quantity" + props._id).value = parseInt(document.getElementById("quantity" + props._id).value) + 1;
-        }
-    }
-
     return (
         <>
-            <div className={itemRemoved ? "item-removed" : "cart-item-container"}>
+            <div className="cart-item-container">
                 <div className="cart-item-top">
                     <div className="cart-item-image-container">
                         <img src={props.image} className="image" alt=""></img>

@@ -24,7 +24,6 @@ function Item(props) {
         };
         axios(config)
             .then(function (res) {
-                console.log(res.data)
                 setSingleItem(res.data);
 
                 const { reviews } = res.data;
@@ -71,6 +70,7 @@ function Item(props) {
                 .then(function (response) {
                     console.log(JSON.stringify(response.data));
                     props.setCartUpdate(!props.cartUpdate);
+                    props.setCartClick(true);
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -94,6 +94,7 @@ function Item(props) {
                                     <h2 className="item-h2">{single_item.name}</h2>
                                     <h3 className="item-h3-stats">Brand: {single_item.brand}</h3>
                                     <h3 className="item-h3-stats">Category: {single_item.category}</h3>
+                                    <h3 className="item-h3-stats">In Stock: {single_item.countInStock}</h3>
                                     <h3 className="item-h3-stats-price">${single_item.price} ea.</h3>
                                 </div>
                                 <div className="form-flex">

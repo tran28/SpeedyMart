@@ -7,33 +7,29 @@ import CartItem from "../checkout/CartItem";
 
 function NavBar(props) {
     const [menuClick, setMenuClick] = useState(false);
-    const [cartClick, setCartClick] = useState(false);
     const [subtotal, setSubtotal] = useState(0);
     const [cartFilled, setCartFilled] = useState(false);
     const [cart, setCart] = useState([]);
+
+    console.log(props);
 
     /* M: useState to control menu icon click */
     const handleMenuClick = () => {
         setMenuClick(!menuClick);
         closeCart();
-        document.body.classList.add("stop-scrolling");
     }
     const closeMenu = () => {
         setMenuClick(false);
-        document.body.classList.remove("stop-scrolling");
     }
 
     /* M: useState to control cart icon click */
     const handleCartClick = () => {
-        setCartClick(!cartClick);
+        props.setCartClick(!props.cartClick);
         closeMenu();
-        document.body.classList.add("stop-scrolling");
-
     }
 
     const closeCart = () => {
-        setCartClick(false);
-        document.body.classList.remove("stop-scrolling");
+        props.setCartClick(false);
     }
 
     // M: 'axios' call to get the user's cart
@@ -55,13 +51,14 @@ function NavBar(props) {
                 // check if there is item in cart
                 if (cart.length > 0) {
                     setCartFilled(true)
-                    cart.reduce(() => {
-                        const subTotal = cart.reduce(
-                            (acc, item) => acc + (item.price * item.qty),
-                            0
-                        );
-                        setSubtotal(subTotal.toFixed(2));
-                    })
+                    const subTotal = cart.reduce(
+                        (acc, item) => acc + (item.price * item.qty),
+                        0
+                    );
+                    setSubtotal(subTotal.toFixed(2));
+                }
+                else{
+                    setCartFilled(false);
                 }
             })
             .catch(function (err) {
@@ -123,7 +120,7 @@ function NavBar(props) {
             </nav>
 
             {/* M: Navbar cart icon toggle*/}
-            <nav className={cartClick ? "nav-cart active" : "nav-cart"}>
+            <nav className={props.cartClick ? "nav-cart active" : "nav-cart"}>
                 <div className="cart-container">
                     <div className="cart-top">
                         <div className="cart-header-container">
@@ -137,7 +134,7 @@ function NavBar(props) {
                             {/* M: Map through the 'cart' JSON array and populate cart sidebar (when clicking cart icon in navbar)*/}
                             {cart.map((item) => {
                                 return (
-                                    <CartItem key={item._id} {...item} />
+                                    <CartItem key={item._id} cartUpdate={props.cartUpdate} setCartUpdate={props.setCartUpdate} {...item} />
                                 )
                             })}
                         </div>

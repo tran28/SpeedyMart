@@ -16,11 +16,12 @@ import { useState } from 'react'
 
 const App = () => {
   const [cartUpdate, setCartUpdate] = useState(false);
+  const [cartClick, setCartClick] = useState(false);
 
   return (
     <Router>
       {/* M: Global header component on every page*/}
-      <Header cartUpdate={cartUpdate} setCartUpdate={setCartUpdate} />
+      <Header cartUpdate={cartUpdate} setCartUpdate={setCartUpdate} cartClick={cartClick} setCartClick={setCartClick}/>
 
       <Routes>
         {/* M: Every page must have a route with an exact path and an element (component)*/}
@@ -30,7 +31,7 @@ const App = () => {
         <Route exact path="/account/login" element={<Login />} />
         <Route exact path="/account/register" element={<Register />} />
         <Route exact path="/shop" element={<Shop />} />
-        <Route exact path="/shop/:productId" element={<Item cartUpdate={cartUpdate} setCartUpdate={setCartUpdate}/>} />
+        <Route exact path="/shop/:productId" element={<Item cartUpdate={cartUpdate} setCartUpdate={setCartUpdate} cartClick={cartClick} setCartClick={setCartClick}/>} />
         <Route exact path="/checkout" element={<Checkout />} />
         <Route exact path="*" element={<ErrorPage />} />
       </Routes>
