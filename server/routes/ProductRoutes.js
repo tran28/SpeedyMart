@@ -1,6 +1,7 @@
 import express from "express";
 import asyncHandler from "express-async-handler";
 import Product from "./../models/ProductModel.js";
+import { protect, admin } from "../util/AuthUtil.js";
 
 const productRoute = express.Router();
 
@@ -183,6 +184,7 @@ productRoute.delete(
 // Add product review by product id
 productRoute.post(
   "/:id/review",
+  protect,
   asyncHandler(async (req, res) => {
     const { rating, comment } = req.body;
     const product = await Product.findById(req.params.id);
