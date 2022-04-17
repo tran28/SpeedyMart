@@ -25,7 +25,12 @@ function Account() {
   }, []);
 
   const handleClick = () => {
-    navigate("/account/addresses");
+    navigate("/account/address");
+  };
+
+  const handleLogOut = () => {
+    localStorage.removeItem("jwtToken");
+    navigate("/account/login");
   };
 
   return (
@@ -60,8 +65,16 @@ function Account() {
                 {/* M: This is the 'Edit Addresses' button */}
                 <div className="button-wrapper">
                   <button className="button" onClick={handleClick}>
-                    <span>Edit Addresses</span>
+                    <span>Edit Address</span>
                   </button>
+                </div>
+
+                {/* M: This is the logout button */}
+                <div className='row'>
+                  <div className='button-link-flex'>
+                    <div className="button-link-text">or</div>
+                    <button className='button-link' onClick={handleLogOut}>log out</button>
+                  </div>
                 </div>
               </div>
             </div>

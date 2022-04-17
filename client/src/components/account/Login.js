@@ -79,6 +79,9 @@ function Login() {
                                     */}
                                     <h3 >{loginError}</h3>
 
+                                    {/* M: User must be signed in before adding item to cart */}
+                                    <h3 className="warning-h3">please sign in to add items to cart</h3>
+
                                     {/* M: This is the 'Sign in' button */}
                                     <div className="button-wrapper">
                                         <button className="button" type="submit">

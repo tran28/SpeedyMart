@@ -8,7 +8,7 @@ import Register from './components/account/Register'
 import Account from './components/account'
 import Login from './components/account/Login'
 import PrivateRoute from './PrivateRoute'
-import Addresses from './components/account/Addresses'
+import Address from './components/account/Address'
 import Item from './components/item'
 import ErrorPage from './components/global/ErrorPage'
 // const baseUrl = '/api/products'
@@ -34,7 +34,7 @@ const App = () => {
         {/* M: Every page must have a route with an exact path and an element (component)*/}
         <Route exact path="/" element={<Home />} />
         <Route exact path="/account" element={<PrivateRoute><Account /></PrivateRoute>} />
-        <Route exact path="/account/addresses" element={<PrivateRoute><Addresses /></PrivateRoute>} />
+        <Route exact path="/account/address" element={<PrivateRoute><Address /></PrivateRoute>} />
         <Route exact path="/account/login" element={<Login />} />
         <Route exact path="/account/register" element={<Register />} />
         <Route exact path="/shop" element={<Shop />} />
