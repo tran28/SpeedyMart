@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import "./item.css"
 import { useEffect, useState } from "react";
+import Reviews from "./reviews";
 
 function Item() {
     // M: get the parameter from the URL to call the 'get single product by ID' (API)
@@ -8,7 +9,6 @@ function Item() {
     const productId = params.productId;
 
     const [single_item, setSingleItem] = useState([]);
-    const [priceSum, setPriceSum] = useState(0);
 
     useEffect(() => {
         var axios = require('axios');
@@ -22,24 +22,22 @@ function Item() {
         axios(config)
             .then(function (response) {
                 setSingleItem(response.data);
-                setPriceSum(single_item.price);
             })
             .catch(function (error) {
                 console.log(error);
             });
-    }, [productId, single_item.price]);
+    }, [productId]);
 
-    function handleSubmit() {
-
+    function handleSubtract() {
+        if (parseInt(document.getElementById("quantity").value) > 1) {
+            document.getElementById("quantity").value = parseInt(document.getElementById("quantity").value) - 1;
+        }
     }
 
-    function handleOnInput() {
-        const quantity = document.getElementById("quantity").value;
-        setPriceSum((single_item.price * quantity).toFixed(2));
-    }
-
-    function preventKeyboardInput(e) {
-        e.preventDefault();
+    function handleAdd() {
+        if (parseInt(document.getElementById("quantity").value) < single_item.countInStock) {
+            document.getElementById("quantity").value = parseInt(document.getElementById("quantity").value) + 1;
+        }
     }
 
     return (
@@ -58,22 +56,27 @@ function Item() {
                                     <h2 className="item-h2">{single_item.name}</h2>
                                     <h3 className="item-h3-stats">Brand: {single_item.brand}</h3>
                                     <h3 className="item-h3-stats">Category: {single_item.category}</h3>
-                                    <h3 className="item-h3-stats-price">${priceSum}</h3>
+                                    <h3 className="item-h3-stats-price">${single_item.price} ea.</h3>
                                 </div>
-                                <form method="post" id="add-cart" onSubmit={handleSubmit}>
-                                    <div className="form-flex">
-                                        <input className="number-input" type="number" id="quantity" min="1" max={single_item.countInStock} defaultValue="1" onKeyDown={e => preventKeyboardInput(e)} onInput={handleOnInput} />
+                                <div className="form-flex">
+                                    <div className="slider">
+                                        <button className="slider-button" id="subtract-quantity" onClick={handleSubtract}>-</button>
+                                        <input className="number-input no-spin" type="number" id="quantity" min="1" max={single_item.countInStock} defaultValue="1" readOnly />
+                                        <button className="slider-button" id="add-quantity" onClick={handleAdd}>+</button>
                                         <button className="add-cart-button" id="add-to-cart" type="submit">Add to cart</button>
                                     </div>
-                                </form>
+                                </div>
                                 <div className="item-desc">
                                     <h2 className="item-h2-small">Description</h2>
                                     <h3 className="item-h3">{single_item.description}</h3>
                                 </div>
                             </div>
                         </div>
+
+                        {/* Reviews  */}
                         <div className="box">
                             <div className="item-review">Number of Reviews: {single_item.numReviews}</div>
+                            <Reviews></Reviews>
                         </div>
                     </div>
                 </div>
