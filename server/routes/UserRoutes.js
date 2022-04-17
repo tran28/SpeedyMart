@@ -175,4 +175,30 @@ userRoute.put(
   })
 );
 
+// Add one item to user cart based on id
+userRoute.put(
+  "/cart/add/:id",
+  protect,
+  asyncHandler(async (req, res) => {
+    const user = await User.findById(req.user._id);
+    if (user) {
+      // if user exists then update with new data from body
+      const product = await Product.findById(req.params.id);
+      if (product) {
+        // If product exists then add it to the user's cart
+        // If product already in the cart, increment qty
+
+        // else add as a new item
+
+      } else {
+        res.status(404);
+        throw new Error("Product not found!");
+      }
+    } else {
+      res.status(404);
+      throw new Error("User not found!");
+    }
+  })
+);
+
 export default userRoute;
