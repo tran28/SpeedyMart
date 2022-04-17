@@ -3,7 +3,7 @@ import "./item.css"
 import { useEffect, useState } from "react";
 import Review from "./review";
 
-function Item() {
+function Item(props) {
     // M: get the parameter from the URL to call the 'get single product by ID' (API)
     const params = useParams();
     const productId = params.productId;
@@ -70,6 +70,7 @@ function Item() {
             axios(config)
                 .then(function (response) {
                     console.log(JSON.stringify(response.data));
+                    props.setCartUpdate(!props.cartUpdate);
                 })
                 .catch(function (error) {
                     console.log(error);

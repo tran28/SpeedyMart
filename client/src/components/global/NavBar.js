@@ -5,7 +5,7 @@ import * as AiIcons from "react-icons/ai"
 import "./header.css"
 import CartItem from "../checkout/CartItem";
 
-function NavBar() {
+function NavBar(props) {
     const [menuClick, setMenuClick] = useState(false);
     const [cartClick, setCartClick] = useState(false);
     const [subtotal, setSubtotal] = useState(0);
@@ -28,7 +28,9 @@ function NavBar() {
         setCartClick(!cartClick);
         closeMenu();
         document.body.classList.add("stop-scrolling");
+
     }
+
     const closeCart = () => {
         setCartClick(false);
         document.body.classList.remove("stop-scrolling");
@@ -49,29 +51,23 @@ function NavBar() {
             .then(function (res) {
                 const { cart } = res.data;
                 setCart(cart);
-                calculateSubtotal(cart);
+
+                // check if there is item in cart
+                if (cart.length > 0) {
+                    setCartFilled(true)
+                    cart.reduce(() => {
+                        const subTotal = cart.reduce(
+                            (acc, item) => acc + (item.price * item.qty),
+                            0
+                        );
+                        setSubtotal(subTotal.toFixed(2));
+                    })
+                }
             })
             .catch(function (err) {
                 console.log(err);
             });
-    }, []);
-
-    function calculateSubtotal(props) {
-        // M: calculate subtotal using reduce() iff the cart is not empty
-        if(props.length > 0){
-            props.reduce(() => {
-                const subTotal = props.reduce(
-                    (acc, item) => acc + (item.price * item.qty),
-                    0
-                );
-                setSubtotal(subTotal.toFixed(2));
-
-                // M: if subtotal is greater than 0 -> cart has item(s) -> 'cartFilled' state is 'true'
-                if(subTotal > 0) setCartFilled(true);
-                return subTotal;
-            })
-        }
-    }
+    }, [props.cartUpdate]);
 
     return (
         <>

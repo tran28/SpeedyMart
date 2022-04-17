@@ -11,24 +11,16 @@ import PrivateRoute from './PrivateRoute'
 import Address from './components/account/Address'
 import Item from './components/item'
 import ErrorPage from './components/global/ErrorPage'
+import { useState } from 'react'
 // const baseUrl = '/api/products'
 
 const App = () => {
-  // const [products, setProducts] = useState([])
-
-  // useEffect(() => {
-  //   axios
-  //     .get(baseUrl)
-  //     .then(response => {
-  //       console.log(response.data)
-  //       setProducts(response.data)
-  //     })
-  // }, [])
+  const [cartUpdate, setCartUpdate] = useState(false);
 
   return (
     <Router>
       {/* M: Global header component on every page*/}
-      <Header />
+      <Header cartUpdate={cartUpdate} setCartUpdate={setCartUpdate} />
 
       <Routes>
         {/* M: Every page must have a route with an exact path and an element (component)*/}
@@ -38,7 +30,7 @@ const App = () => {
         <Route exact path="/account/login" element={<Login />} />
         <Route exact path="/account/register" element={<Register />} />
         <Route exact path="/shop" element={<Shop />} />
-        <Route exact path="/shop/:productId" element={<Item />} />
+        <Route exact path="/shop/:productId" element={<Item cartUpdate={cartUpdate} setCartUpdate={setCartUpdate}/>} />
         <Route exact path="/checkout" element={<Checkout />} />
         <Route exact path="*" element={<ErrorPage />} />
       </Routes>
