@@ -10,17 +10,19 @@ export const ContentData = [
     {
         id: 1,
         image: require("../../images/food.png"),
-        title: "Snacks",
-        price_from: "$9.00",
-        link: "/",
-        description: "snack category",
+        heading: "Welcome",
+        subheading: "nothing but convenience",
+        cta: "shop all",
+        link: "/shop",
+        description: "shop all",
     },
     {
         id: 2,
         image: require("../../images/drink.png"),
-        title: "Drinks",
-        price_from: "$5.00",
+        heading: "Featured",
+        subheading: "something new is brewing",
+        cta: "shop featured",
         link: "/",
-        description: "drink category",
+        description: "featured collection",
     }
 ]

@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "./item.css"
 import { useEffect, useState } from "react";
 import Reviews from "./reviews";
@@ -7,6 +7,8 @@ function Item() {
     // M: get the parameter from the URL to call the 'get single product by ID' (API)
     const params = useParams();
     const productId = params.productId;
+
+    let navigate = useNavigate();
 
     const [single_item, setSingleItem] = useState([]);
 
@@ -40,6 +42,12 @@ function Item() {
         }
     }
 
+    function handleAddToCart() {
+        if(localStorage.getItem("jwtToken") === null){
+            navigate("/account/login");
+        }
+    }
+
     return (
         <>
             <div className="main">
@@ -63,7 +71,7 @@ function Item() {
                                         <button className="slider-button" id="subtract-quantity" onClick={handleSubtract}>-</button>
                                         <input className="number-input no-spin" type="number" id="quantity" min="1" max={single_item.countInStock} defaultValue="1" readOnly />
                                         <button className="slider-button" id="add-quantity" onClick={handleAdd}>+</button>
-                                        <button className="add-cart-button" id="add-to-cart" type="submit">Add to cart</button>
+                                        <button className="add-cart-button" id="add-to-cart" type="submit" onClick={handleAddToCart}>Add to cart</button>
                                     </div>
                                 </div>
                                 <div className="item-desc">
