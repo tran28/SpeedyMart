@@ -9,6 +9,7 @@ function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loginError, setLoginError] = useState("");
+    const redirect = localStorage.getItem("redirect");
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -30,15 +31,20 @@ function Login() {
         };
         axios(config)
             .then(res => {
-                console.log(res.data);
+                // add token to localStorage
                 localStorage.setItem("jwtToken", "Bearer " + res.data.token);
+                // navigate to the corresponding page route depending on account type
                 if (res.data.isAdmin) {
                     navigate("/admin");
                     localStorage.setItem("admin", true);
                 }
                 else {
                     navigate("/account");
+                    // refresh page in order to get cart
+                    navigate(0);
                 }
+                // remove redirect key once logged in
+                localStorage.removeItem("redirect");
             })
             .catch(err => {
                 console.log(err);
@@ -86,7 +92,7 @@ function Login() {
                                     <h3 >{loginError}</h3>
 
                                     {/* M: User must be signed in before adding item to cart */}
-                                    <h3 className="warning-h3">please sign in to add items to cart</h3>
+                                    <h3 className={redirect ? "warning-h3" : "hidden"}>please sign in to add items to cart</h3>
 
                                     {/* M: This is the 'Sign in' button */}
                                     <div className="button-wrapper">

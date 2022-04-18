@@ -22,7 +22,7 @@ export const ContentData = [
         heading: "Featured",
         subheading: "something new is brewing",
         cta: "shop featured",
-        link: "/",
+        link: "/shop",
         description: "featured collection",
     }
 ]
