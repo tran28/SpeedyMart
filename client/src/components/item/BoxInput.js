@@ -1,6 +1,8 @@
+import { useNavigate } from "react-router-dom";
 import "./boxinput.css"
 
 function BoxInput(props) {
+    let navigate = useNavigate();
     const isLoggedIn = localStorage.getItem("jwtToken");
 
     const handlePostReview = () => {
@@ -29,6 +31,7 @@ function BoxInput(props) {
                 isLoggedIn ? document.getElementById("warning").className = "hidden"
                     : document.getElementById("warning").className = "warning-h3"
             });
+        navigate(0);
     }
 
     return (

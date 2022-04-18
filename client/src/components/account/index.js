@@ -2,11 +2,13 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import "./account.css"
 import { useNavigate } from 'react-router-dom'
+import OrderView from './OrderView';
 
 function Account() {
   let navigate = useNavigate();
   const [data, setData] = useState([]);
   const [address, setAddress] = useState([]);
+  const [orders, setOrders] = useState([]);
 
   useEffect(() => {
     var config = {
@@ -24,8 +26,25 @@ function Account() {
         const { address } = res.data;
         setAddress(address);
         console.log(res.data);
-        console.log(address);
       })
+
+    var config2 = {
+      method: 'get',
+      url: '/api/orders',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': localStorage.getItem("jwtToken"),
+      }
+    };
+
+    axios(config2)
+      .then(function (res) {
+        console.log(res.data);
+        setOrders(res.data);
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
   }, []);
 
   const handleClick = () => {
@@ -35,6 +54,7 @@ function Account() {
   const handleLogOut = () => {
     localStorage.clear();
     navigate("/account/login");
+    navigate(0);
   };
 
   return (
@@ -62,7 +82,7 @@ function Account() {
                 <div className='row'>
                   <p className='user-info'>
                     the default address is&nbsp;
-                    <span className='highlight'></span><br />
+                    <span className='highlight'>{address.street} {address.unit}<br />in {address.city}, {address.province} {address.postalCode} {address.country}</span>.<br />
                   </p>
                 </div>
 
@@ -89,7 +109,11 @@ function Account() {
               <h2>Your Orders</h2>
             </div>
             <div className="right">
-              <h3>append orders here</h3>
+              {orders.map((item) => {
+                return (
+                  <OrderView key={item._id} {...item} />
+                )
+              })}
             </div>
           </div>
         </div>

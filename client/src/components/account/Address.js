@@ -18,6 +18,7 @@ function Address() {
     const [countryError, setCountryError] = useState("");
     const blankErrorMessage = "cannot be blank"
 
+    // validation function to be called before 'axios' call
     const validate = () => {
         let isValid = true;
         if (!street) {
@@ -113,7 +114,7 @@ function Address() {
                             <h3>provide us with an address</h3>
                             <div className="row">
                                 <form method="post" id="create_customer" onSubmit={handleSubmit}>
-
+                                    {/* M: This is the 'Street' input */}
                                     <div className="row">
                                         <input className="text-long" type="text" id="add_street" placeholder="Street" value={street} onChange={e => {
                                             setStreet(e.target.value);
@@ -123,6 +124,7 @@ function Address() {
                                     </div>
                                     <h3 >{streetError}</h3>
 
+                                    {/* M: This is the 'Unit' input (optional)*/}
                                     <div className="row">
                                         <input className="text-long" type="text" id="add_unit" placeholder="Unit (optional)" value={unit} onChange={e => {
                                             setUnit(e.target.value);
@@ -130,6 +132,7 @@ function Address() {
                                         }} />
                                     </div>
 
+                                    {/* M: This is the 'City' input */}
                                     <div className="row">
                                         <input className="text-long" type="text" id="add_city" placeholder="City" value={city} onChange={e => {
                                             setCity(e.target.value);
@@ -139,6 +142,7 @@ function Address() {
                                     </div>
                                     <h3 >{cityError}</h3>
 
+                                    {/* M: This is the 'Province' input */}
                                     <div className="row">
                                         <input className="text-long" type="text" id="add_province" placeholder="Province" value={province} onChange={e => {
                                             setProvince(e.target.value);
@@ -149,6 +153,7 @@ function Address() {
                                     </div>
                                     <h3>{provinceError}</h3>
 
+                                    {/* M: This is the 'Postal Code' input */}
                                     <div className="row">
                                         <input className="text-long" type="text" id="add_postalcode" placeholder="Postal Code" value={postalCode} onChange={e => {
                                             setPostalCode(e.target.value);
@@ -159,6 +164,7 @@ function Address() {
                                     </div>
                                     <h3>{postalCodeError}</h3>
 
+                                    {/* M: This is the 'Country' input */}
                                     <div className="row">
                                         <input className="text-long" type="text" id="add_country" placeholder="Country" value={country} onChange={e => {
                                             setCountry(e.target.value);

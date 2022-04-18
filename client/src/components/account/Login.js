@@ -40,6 +40,8 @@ function Login() {
                 }
                 else {
                     navigate("/account");
+                    // refresh page in order to get cart
+                    navigate(0);
                 }
                 // remove redirect key once logged in
                 localStorage.removeItem("redirect");
