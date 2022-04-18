@@ -33,6 +33,11 @@ const orderSchema = mongoose.Schema(
       required: true,
       default: "Visa",
     },
+    isPaid: {
+      type: Boolean,
+      required: true,
+      default: true,
+    },
     taxPrice: {
       type: Number,
       required: true,

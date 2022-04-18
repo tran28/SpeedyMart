@@ -24,3 +24,5 @@ yarn-debug.log*
 yarn-error.log*
 
 newrelic_agent.log
+
+access.log

@@ -1,5 +1,6 @@
 import express from 'express'
 import path from 'path'
+import fs from 'fs'
 import cors from 'cors'
 import connectDatabase from './db/MongoDB.js'
 import dotenv from "dotenv";
@@ -8,9 +9,17 @@ import productRoute from './routes/ProductRoutes.js';
 import userRoute from './routes/UserRoutes.js'
 import orderRoute from './routes/OrderRoutes.js';
 import newrelic from 'newrelic';
+import logger from 'morgan';
+
 
 const app = express()
 dotenv.config();
+
+// Morgan logger
+app.use(logger('combined', {
+  stream: fs.createWriteStream('./access.log', {flags: 'a'})
+}));
+app.use(logger('dev'));
 
 // Use Cross-Origin Resource Sharing to allow resources from other origins
 app.use(cors())
@@ -34,6 +43,11 @@ app.use("/api/orders", orderRoute);
 // For load testing
 app.get('/loaderio-3a70303fad2057ab6e91ee83d9cade1f', function(req,res){
   res.sendFile(__dirname + '/loaderio-3a70303fad2057ab6e91ee83d9cade1f.txt');
+ }); 
+
+// Get logs
+app.get('/logs', function(req,res){
+  res.sendFile(__dirname + '/access.log');
  }); 
 
 // All remaining requests return the React app, so it can handle routing.
