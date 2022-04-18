@@ -58,3 +58,17 @@ pre{
         padding: 2em 2em 2em 6em;
     }
 }
+
+.update-button {
+    border: 3px var(--dark) solid;
+    background: var(--dark);
+    padding: 0.2em 0.3em 0.2em 0.3em;
+    color: white;
+    font-family: var(--menlo-altfont);
+    font-weight: bold;
+    font-size: 0.8em;
+}
+
+.update-button-hide {
+    display: none;
+}
