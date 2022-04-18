@@ -95,7 +95,9 @@ app.get('/logs', function(req,res){
         console.log('Failed: ' + err);
       } else {
         console.log('Finished');
-        res.send(output);
+        
+        console.log(output.split('\n').reverse().join("\r\n"))
+        //res.send(output);
       }
     });
   });
