@@ -88,6 +88,7 @@ userRoute.get(
         email: user.email,
         isAdmin: user.isAdmin,
         createdAt: user.createdAt,
+        address: user.address,
       });
     } else {
       res.status(404);
