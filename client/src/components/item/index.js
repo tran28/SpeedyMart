@@ -50,7 +50,7 @@ function Item(props) {
     }
 
     const handleAddToCart = () => {
-        if (localStorage.getItem("jwtToken") === null) {
+        if (!localStorage.getItem("jwtToken")) {
             // user is not logged in -> cannot add items to cart -> send to sign in page with 'redirect' key
             localStorage.setItem("redirect", true);
             navigate("/account/login");

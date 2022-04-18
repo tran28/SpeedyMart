@@ -31,7 +31,6 @@ function Login() {
         };
         axios(config)
             .then(res => {
-                console.log(res.data);
                 // add token to localStorage
                 localStorage.setItem("jwtToken", "Bearer " + res.data.token);
                 // navigate to the corresponding page route depending on account type

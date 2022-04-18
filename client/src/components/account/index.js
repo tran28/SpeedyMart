@@ -5,7 +5,8 @@ import { useNavigate } from 'react-router-dom'
 
 function Account() {
   let navigate = useNavigate();
-  const [data, setData] = useState([])
+  const [data, setData] = useState([]);
+  const [address, setAddress] = useState([]);
 
   useEffect(() => {
     var config = {
@@ -20,7 +21,10 @@ function Account() {
     axios(config)
       .then(res => {
         setData(res.data)
-        console.log(res.data)
+        const { address } = res.data;
+        setAddress(address);
+        console.log(res.data);
+        console.log(address);
       })
   }, []);
 
@@ -58,7 +62,7 @@ function Account() {
                 <div className='row'>
                   <p className='user-info'>
                     the default address is&nbsp;
-                    <span className='highlight'>{/* add data.address here */}</span><br />
+                    <span className='highlight'></span><br />
                   </p>
                 </div>
 

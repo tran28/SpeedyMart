@@ -1,6 +1,9 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Address() {
+    let navigate = useNavigate();
+
     const [street, setStreet] = useState("");
     const [unit, setUnit] = useState("");
     const [city, setCity] = useState("");
@@ -8,33 +11,37 @@ function Address() {
     const [postalCode, setPostalCode] = useState("");
     const [country, setCountry] = useState("");
 
-    const [blankError, setBlankError] = useState("");
+    const [streetError, setStreetError] = useState("");
+    const [cityError, setCityError] = useState("");
+    const [provinceError, setProvinceError] = useState("");
+    const [postalCodeError, setPostalCodeError] = useState("");
+    const [countryError, setCountryError] = useState("");
     const blankErrorMessage = "cannot be blank"
 
     const validate = () => {
         let isValid = true;
         if (!street) {
-            setBlankError(blankErrorMessage)
+            setStreetError(blankErrorMessage)
             document.getElementById("add_street").style.background = "#f1c7c3";
             isValid = false;
         }
         if (!city) {
-            setBlankError(blankErrorMessage)
+            setCityError(blankErrorMessage)
             document.getElementById("add_city").style.background = "#f1c7c3";
             isValid = false;
         }
         if (!province) {
-            setBlankError(blankErrorMessage)
+            setProvinceError(blankErrorMessage)
             document.getElementById("add_province").style.background = "#f1c7c3";
             isValid = false;
         }
         if (!postalCode) {
-            setBlankError(blankErrorMessage)
+            setPostalCodeError(blankErrorMessage)
             document.getElementById("add_postalcode").style.background = "#f1c7c3";
             isValid = false;
         }
         if (!country) {
-            setBlankError(blankErrorMessage)
+            setCountryError(blankErrorMessage)
             document.getElementById("add_country").style.background = "#f1c7c3";
             isValid = false;
         }
@@ -49,6 +56,35 @@ function Address() {
         const isValid = validate();
         if (isValid) {
             // run axios to add address
+            var axios = require('axios');
+            var data = JSON.stringify({
+                "address": {
+                    "street": street,
+                    "unit": unit,
+                    "city": city,
+                    "province": province,
+                    "postalCode": postalCode,
+                    "country": country
+                }
+            });
+
+            var config = {
+                method: 'put',
+                url: 'http://localhost:5001/api/users/profile',
+                headers: {
+                    'Authorization': localStorage.getItem("jwtToken"),
+                    'Content-Type': 'application/json'
+                },
+                data: data
+            };
+
+            axios(config)
+                .then(function (res) {
+                    navigate("/account");
+                })
+                .catch(function (err) {
+                    console.log(err);
+                });
         }
         else {
             console.log({
@@ -82,16 +118,15 @@ function Address() {
                                         <input className="text-long" type="text" id="add_street" placeholder="Street" value={street} onChange={e => {
                                             setStreet(e.target.value);
                                             e.target.style.background = "white";
-                                            setBlankError("");
+                                            setStreetError("");
                                         }} />
                                     </div>
-                                    <h3 >{blankError}</h3>
+                                    <h3 >{streetError}</h3>
 
                                     <div className="row">
                                         <input className="text-long" type="text" id="add_unit" placeholder="Unit (optional)" value={unit} onChange={e => {
                                             setUnit(e.target.value);
                                             e.target.style.background = "white";
-                                            setBlankError("");
                                         }} />
                                     </div>
 
@@ -99,40 +134,40 @@ function Address() {
                                         <input className="text-long" type="text" id="add_city" placeholder="City" value={city} onChange={e => {
                                             setCity(e.target.value);
                                             e.target.style.background = "white";
-                                            setBlankError("");
+                                            setCityError("");
                                         }} />
                                     </div>
-                                    <h3 >{blankError}</h3>
+                                    <h3 >{cityError}</h3>
 
                                     <div className="row">
                                         <input className="text-long" type="text" id="add_province" placeholder="Province" value={province} onChange={e => {
                                             setProvince(e.target.value);
                                             e.target.style.background = "white";
-                                            setBlankError("");
+                                            setProvinceError("");
 
                                         }} />
                                     </div>
-                                    <h3>{blankError}</h3>
+                                    <h3>{provinceError}</h3>
 
                                     <div className="row">
                                         <input className="text-long" type="text" id="add_postalcode" placeholder="Postal Code" value={postalCode} onChange={e => {
                                             setPostalCode(e.target.value);
                                             e.target.style.background = "white";
-                                            setBlankError("");
+                                            setPostalCodeError("");
 
                                         }} />
                                     </div>
-                                    <h3>{blankError}</h3>
+                                    <h3>{postalCodeError}</h3>
 
                                     <div className="row">
                                         <input className="text-long" type="text" id="add_country" placeholder="Country" value={country} onChange={e => {
                                             setCountry(e.target.value);
                                             e.target.style.background = "white";
-                                            setBlankError("");
+                                            setCountryError("");
 
                                         }} />
                                     </div>
-                                    <h3>{blankError}</h3>
+                                    <h3>{countryError}</h3>
 
                                     {/* M: This is the 'Set default' button */}
                                     <div className="button-wrapper">
