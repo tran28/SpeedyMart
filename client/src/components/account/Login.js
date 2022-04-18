@@ -32,7 +32,13 @@ function Login() {
             .then(res => {
                 console.log(res.data);
                 localStorage.setItem("jwtToken", "Bearer " + res.data.token);
-                navigate("/account");
+                if (res.data.isAdmin) {
+                    navigate("/admin");
+                    localStorage.setItem("admin", true);
+                }
+                else {
+                    navigate("/account");
+                }
             })
             .catch(err => {
                 console.log(err);

@@ -29,7 +29,7 @@ function Account() {
   };
 
   const handleLogOut = () => {
-    localStorage.removeItem("jwtToken");
+    localStorage.clear();
     navigate("/account/login");
   };
 
