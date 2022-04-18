@@ -1,15 +1,18 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import * as FaIcons from "react-icons/fa"
 import * as AiIcons from "react-icons/ai"
 import "./header.css"
 import CartItem from "../checkout/CartItem";
+import { useNavigate, useParams } from "react-router-dom";
 
 function NavBar(props) {
     const [menuClick, setMenuClick] = useState(false);
     const [subtotal, setSubtotal] = useState(0);
     const [cartFilled, setCartFilled] = useState(false);
     const [cart, setCart] = useState([]);
+
+    let navigate = useNavigate();
 
     /* M: useState to control menu icon click */
     const handleMenuClick = () => {
@@ -28,6 +31,10 @@ function NavBar(props) {
 
     const closeCart = () => {
         props.setCartClick(false);
+    }
+
+    const handleCheckout = () => {
+        navigate('/checkout')
     }
 
     // M: 'axios' call to get the user's cart
@@ -145,7 +152,7 @@ function NavBar(props) {
                         <div className="ship-tax-container">
                             <h3 className="cart-h3">shipping & taxes calculated at checkout.</h3>
                         </div>
-                        <button className="check-out-button">Check out</button>
+                        <button className="check-out-button" onClick={handleCheckout}>Check out</button>
                     </div>
                 </div>
             </nav>

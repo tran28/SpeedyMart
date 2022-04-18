@@ -1,21 +1,32 @@
 import React, {useEffect, useState} from "react";
-import {getCart} from "../../API/API";
 import "./checkout.css"
 
 
 function Checkout() {
     const [items, setItems] = useState([])
     const [total, setTotal] = useState(0.0)
+    
     useEffect(() => {
-        getCart().then((res) => {
-            const {cart} = res.data;
-            setItems(cart)
-            let t = 0
-            items.forEach(item => t = t + item.price*item.qty)
-            setTotal(t)
-        }).catch(function (err) {
-            console.log(err);
-        });
+        var axios = require('axios');
+        var config = {
+            method: 'get',
+            url: '/api/users/cart',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem('jwtToken')
+            }
+        };
+        axios(config)
+            .then(function (res) {
+                const {cart} = res.data;
+                setItems(cart)
+                let t = 0
+                items.forEach(item => t = t + item.price*item.qty)
+                setTotal(t)
+            })
+            .catch(function (err) {
+                console.log(err);
+            });
     }, [items])
     console.log(items)
     return (
