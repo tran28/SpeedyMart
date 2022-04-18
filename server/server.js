@@ -1,6 +1,5 @@
 import express from 'express'
 import path from 'path'
-import fs from 'fs'
 import cors from 'cors'
 import connectDatabase from './db/MongoDB.js'
 import dotenv from "dotenv";
@@ -10,14 +9,29 @@ import userRoute from './routes/UserRoutes.js'
 import orderRoute from './routes/OrderRoutes.js';
 import newrelic from 'newrelic';
 import logger from 'morgan';
-
+import { S3StreamLogger } from 's3-streamlogger';
+import async from 'async';
+import AWS from 'aws-sdk';
 
 const app = express()
 dotenv.config();
+ 
+// AWS S3 bucket logs settings
+var BUCKET = 'speedymart';
+var PREFIX = 'logs';
+AWS.config.update({accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY});
+
+// For sending logs to aws s3 bucket
+var s3stream = new S3StreamLogger({
+  bucket: "speedymart",
+  folder: "logs",
+  access_key_id: process.env.AWS_ACCESS_KEY_ID,
+  secret_access_key: process.env.AWS_SECRET_ACCESS_KEY
+});
 
 // Morgan logger
 app.use(logger('combined', {
-  stream: fs.createWriteStream('./access.log', {flags: 'a'})
+  stream: s3stream
 }));
 app.use(logger('dev'));
 
@@ -45,9 +59,52 @@ app.get('/loaderio-3a70303fad2057ab6e91ee83d9cade1f', function(req,res){
   res.sendFile(__dirname + '/loaderio-3a70303fad2057ab6e91ee83d9cade1f.txt');
  }); 
 
-// Get logs
+// Get logs from s3 bucket
 app.get('/logs', function(req,res){
-  res.sendFile(__dirname + '/access.log');
+  var output = "";
+  var s3 = new AWS.S3();
+  var params = {
+    Bucket: BUCKET,
+    Prefix: PREFIX
+  }
+
+  s3.listObjects(params, function(err, data){
+    if (err) return console.log(err);
+
+    async.eachSeries(data.Contents, function(fileObj, callback){
+      var key = fileObj.Key;
+      console.log('Downloading: ' + key);
+
+      var fileParams = {
+        Bucket: BUCKET,
+        Key: key
+      }
+
+      s3.getObject(fileParams, function(err, fileContents){
+        if (err) {
+          callback(err);
+        } else {
+          // Read the file
+          var contents = fileContents.Body.toString();
+            
+            output += contents.replaceAll("::",'\n') + '\n';
+
+
+          callback();
+        }
+      });
+      
+    }, function(err) {
+      if (err) {
+        console.log('Failed: ' + err);
+      } else {
+        console.log('Finished');
+        res.send(output);
+      }
+    });
+  });
+
+  
  }); 
 
 // All remaining requests return the React app, so it can handle routing.

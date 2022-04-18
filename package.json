@@ -24,7 +24,8 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.2.9",
     "morgan": "^1.10.0",
-    "newrelic": "^8.9.1"
+    "newrelic": "^8.9.1",
+    "s3-streamlogger": "^1.7.0"
   },
   "devDependencies": {
     "concurrently": "^7.1.0",
