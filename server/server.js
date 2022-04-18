@@ -30,7 +30,7 @@ var s3stream = new S3StreamLogger({
 });
 
 // Morgan logger
-app.use(logger('combined', {
+app.use(logger(':remote-addr :remote-user [:date[clf]] :method :url :status :res[content-length] - :response-time ms **', {
   stream: s3stream
 }));
 app.use(logger('dev'));
@@ -86,14 +86,10 @@ app.get('/logs', function(req,res){
         } else {
           // Read the file
           var contents = fileContents.Body.toString();
-            
-            output += contents.replaceAll("::",'\n') + '\n';
-
-
+            output += contents.replaceAll("**",'\n');
           callback();
         }
       });
-      
     }, function(err) {
       if (err) {
         console.log('Failed: ' + err);
