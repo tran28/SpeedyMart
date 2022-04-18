@@ -73,7 +73,7 @@ app.get('/logs', function(req,res){
 
     async.eachSeries(data.Contents, function(fileObj, callback){
       var key = fileObj.Key;
-      console.log('Downloading: ' + key);
+      //console.log('Downloading: ' + key);
 
       var fileParams = {
         Bucket: BUCKET,
@@ -94,10 +94,8 @@ app.get('/logs', function(req,res){
       if (err) {
         console.log('Failed: ' + err);
       } else {
-        console.log('Finished');
-        
-        console.log(output.split('\n').reverse().join("\r\n"))
-        //res.send(output);
+        //console.log('Finished');
+        res.send(output.split('\n').reverse().join("\r\n"));
       }
     });
   });
