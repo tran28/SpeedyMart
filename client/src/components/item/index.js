@@ -2,6 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import "./item.css"
 import { useEffect, useState } from "react";
 import Review from "./review";
+import BoxInput from "./BoxInput";
 
 function Item(props) {
     // M: get the parameter from the URL to call the 'get single product by ID' (API)
@@ -12,6 +13,7 @@ function Item(props) {
 
     const [single_item, setSingleItem] = useState([]);
     const [allReviews, setAllReviews] = useState([]);
+    const [reload, setReload] = useState(false);
 
     useEffect(() => {
         var axios = require('axios');
@@ -123,6 +125,7 @@ function Item(props) {
                                         <Review key={item._id} {...item}></Review>
                                     )
                                 })}
+                                <BoxInput reload={reload} setReload={setReload}/>
                             </div>
                         </div>
                     </div>
