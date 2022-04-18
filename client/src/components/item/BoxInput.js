@@ -25,13 +25,13 @@ function BoxInput(props) {
         axios(config)
             .then(function (res) {
                 document.getElementById("review-comment").value = "";
+                navigate(0);
             })
             .catch(function (error) {
                 console.log(error);
                 isLoggedIn ? document.getElementById("warning").className = "hidden"
                     : document.getElementById("warning").className = "warning-h3"
             });
-        navigate(0);
     }
 
     return (
