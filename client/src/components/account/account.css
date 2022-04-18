@@ -55,6 +55,7 @@ h3 {
     font-family: var(--menlo-altfont);
     color: var(--dark);
 }
+
 ::placeholder {
     color: var(--dark);
 }
@@ -95,14 +96,14 @@ span {
     font-size: 1.2em;
 }
 
-.user-info{
+.user-info {
     font-family: var(--menlo-altfont);
     font-size: 1.2em;
     line-height: 1.5em;
     color: var(--dark);
 }
 
-.highlight{
+.highlight {
     font-size: 0.9em;
     padding: 0.2em 0.4em 0.2em 0.4em;
     font-family: var(--menlo-altfont);
@@ -114,21 +115,40 @@ span {
     font-size: 1em;
 }
 
-.button-link-flex{
+.button-link-flex {
     display: flex;
     justify-content: flex-start;
     margin-top: 1.6em;
 }
 
-.button-link-text{
+.button-link-text {
     font-family: var(--menlo-altfont);
     padding-right: 0.5em;
 }
 
-.button-link{
+.button-link {
     cursor: pointer;
     font-family: var(--menlo-altfont);
     text-decoration: underline;
+}
+
+.orderview-container {
+    padding: 0.5em 0 0.5em 0;
+}
+
+.orderview-flex {
+    display: flex;
+    width: 50vw;
+    border-left: 3px var(--accent) solid;
+    padding: 0 0.5em 0 0.5em;
+}
+
+.highlight-order {
+    font-size: 0.9em;
+    padding: 0.2em 0.4em 0.2em 0.4em;
+    font-family: var(--menlo-altfont);
+    color: var(--accent);
+    background: white;
 }
 
 @media screen and (min-width: 720px) {

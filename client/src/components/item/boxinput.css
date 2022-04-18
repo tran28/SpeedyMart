@@ -32,9 +32,11 @@
     border: 2px solid var(--dark);
     border-radius: 0.4em;
     background-color: var(--light);
-    font-size: 1.2em;
+    font-size: 1em;
     resize: none;
     margin-bottom: 1em;
+    font-family: var(--menlo-altfont);
+    color: var(--dark);
 }
 
 .row-container {
@@ -54,7 +56,7 @@
     font-size: 1.2em;
 }
 
-.out-of{
+.out-of {
     border-top: 3px var(--dark) solid;
     border-right: 3px var(--dark) solid;
     border-bottom: 3px var(--dark) solid;
@@ -65,4 +67,8 @@
     font-family: var(--menlo-altfont);
     font-weight: bold;
     font-size: 1.2em;
+}
+
+.hidden {
+    display: none;
 }

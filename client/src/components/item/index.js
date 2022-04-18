@@ -50,7 +50,9 @@ function Item(props) {
     }
 
     const handleAddToCart = () => {
-        if (localStorage.getItem("jwtToken") === null) {
+        if (!localStorage.getItem("jwtToken")) {
+            // user is not logged in -> cannot add items to cart -> send to sign in page with 'redirect' key
+            localStorage.setItem("redirect", true);
             navigate("/account/login");
         }
         else {
@@ -74,8 +76,8 @@ function Item(props) {
                     props.setCartUpdate(!props.cartUpdate);
                     props.setCartClick(true);
                 })
-                .catch(function (error) {
-                    console.log(error);
+                .catch(function (err) {
+                    console.log(err);
                 });
         }
     }
@@ -125,7 +127,7 @@ function Item(props) {
                                         <Review key={item._id} {...item}></Review>
                                     )
                                 })}
-                                <BoxInput productId={productId}/>
+                                <BoxInput productId={productId} />
                             </div>
                         </div>
                     </div>

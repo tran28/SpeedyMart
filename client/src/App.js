@@ -32,11 +32,11 @@ const App = () => {
         <Route exact path="/account" element={<PrivateRoute><Account /></PrivateRoute>} />
         <Route exact path="/admin" element={<ProtectedAdmin><Admin /></ProtectedAdmin>} />
         <Route exact path="/account/address" element={<PrivateRoute><Address /></PrivateRoute>} />
+        <Route exact path="/checkout" element={<PrivateRoute><Checkout /></PrivateRoute>} />
         <Route exact path="/account/login" element={<Login />} />
         <Route exact path="/account/register" element={<Register />} />
         <Route exact path="/shop" element={<Shop />} />
         <Route exact path="/shop/:productId" element={<Item cartUpdate={cartUpdate} setCartUpdate={setCartUpdate} cartClick={cartClick} setCartClick={setCartClick} />} />
-        <Route exact path="/checkout" element={<Checkout />} />
         <Route exact path="/unauthorized" element={<UnauthorizedPage />} />
         <Route exact path="*" element={<ErrorPage />} />
       </Routes>
