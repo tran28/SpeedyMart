@@ -13,7 +13,7 @@ function Item(props) {
 
     const [single_item, setSingleItem] = useState([]);
     const [allReviews, setAllReviews] = useState([]);
-    const [reload, setReload] = useState(false);
+    const [avgRating, setAvgRating] = useState(0);
 
     useEffect(() => {
         var axios = require('axios');
@@ -27,6 +27,7 @@ function Item(props) {
         axios(config)
             .then(function (res) {
                 setSingleItem(res.data);
+                setAvgRating(res.data.rating.toFixed(1));
 
                 const { reviews } = res.data;
                 setAllReviews(reviews);
@@ -69,8 +70,7 @@ function Item(props) {
             };
 
             axios(config)
-                .then(function (response) {
-                    console.log(JSON.stringify(response.data));
+                .then(function (res) {
                     props.setCartUpdate(!props.cartUpdate);
                     props.setCartClick(true);
                 })
@@ -118,14 +118,14 @@ function Item(props) {
                         <div className="box">
                             <div className="reviews-main-container">
                                 <div className="review-count-container">
-                                    <h3 className="review-count">Average Rating: {single_item.rating}/5 ({single_item.numReviews} reviews)</h3>
+                                    <h3 className="review-count">Average Rating: {avgRating} ({single_item.numReviews} reviews)</h3>
                                 </div>
                                 {allReviews.map((item) => {
                                     return (
                                         <Review key={item._id} {...item}></Review>
                                     )
                                 })}
-                                <BoxInput reload={reload} setReload={setReload}/>
+                                <BoxInput productId={productId}/>
                             </div>
                         </div>
                     </div>

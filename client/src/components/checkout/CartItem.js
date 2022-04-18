@@ -1,7 +1,29 @@
 import "./cartitem.css"
 import * as AiIcons from "react-icons/ai"
+import { useEffect, useState } from "react";
 
 function CartItem(props) {
+    const [stockTracker, setStockTracker] = useState(0);
+
+    useEffect(() => {
+        // get product stock count
+        var axios = require('axios');
+        var config = {
+            method: 'get',
+            url: '/api/products/' + props.product,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        };
+        axios(config)
+            .then(function (res) {
+                setStockTracker(res.data.countInStock);
+            })
+            .catch(function (err) {
+                console.log(err);
+            });
+    }, [props.product])
+
     function handleRemoveCartItem() {
         var axios = require('axios');
         var data = JSON.stringify({
@@ -19,12 +41,11 @@ function CartItem(props) {
         };
 
         axios(config)
-            .then(function (response) {
-                console.log(JSON.stringify(response.data));
+            .then(function (res) {
                 props.setCartUpdate(!props.cartUpdate);
             })
-            .catch(function (error) {
-                console.log(error);
+            .catch(function (err) {
+                console.log(err);
             });
     }
 
@@ -45,22 +66,21 @@ function CartItem(props) {
         };
 
         axios(config)
-            .then(function (response) {
-                console.log(JSON.stringify(response.data));
+            .then(function (res) {
                 props.setCartUpdate(!props.cartUpdate);
             })
-            .catch(function (error) {
-                console.log(error);
+            .catch(function (err) {
+                console.log(err);
             });
     }
 
     const handleAdd = () => {
-        if (parseInt(document.getElementById("quantity" + props._id).value) < 100) {
+        if (parseInt(document.getElementById("quantity" + props._id).value) < stockTracker) {
             var axios = require('axios');
             var data = JSON.stringify({
                 "qty": 1,
             });
-    
+
             var config = {
                 method: 'put',
                 url: '/api/users/cart/add/' + props.product,
@@ -70,14 +90,13 @@ function CartItem(props) {
                 },
                 data: data
             };
-    
+
             axios(config)
-                .then(function (response) {
-                    console.log(JSON.stringify(response.data));
+                .then(function (res) {
                     props.setCartUpdate(!props.cartUpdate);
                 })
-                .catch(function (error) {
-                    console.log(error);
+                .catch(function (err) {
+                    console.log(err);
                 });
         }
     }

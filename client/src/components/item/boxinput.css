@@ -42,11 +42,26 @@
 }
 
 .rating-input {
-    border: 3px var(--dark) solid;
-    border-radius: 0.4em;
+    border-top: 3px var(--dark) solid;
+    border-left: 3px var(--dark) solid;
+    border-bottom: 3px var(--dark) solid;
+    background: var(--light);
     padding: 0.4em;
-    margin: 0 0.6em 0 0.6em;
+    margin: 0 0 0 0.6em;
     color: var(--dark);
+    font-family: var(--menlo-altfont);
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.out-of{
+    border-top: 3px var(--dark) solid;
+    border-right: 3px var(--dark) solid;
+    border-bottom: 3px var(--dark) solid;
+    background: var(--dark);
+    padding: 0.4em;
+    margin: 0 0.6em 0 0;
+    color: white;
     font-family: var(--menlo-altfont);
     font-weight: bold;
     font-size: 1.2em;
