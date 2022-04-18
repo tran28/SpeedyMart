@@ -8,7 +8,6 @@ import Product from "./../models/ProductModel.js";
 const userRoute = express.Router();
 
 // Get all users
-// ** add authentication to this later!! **
 userRoute.get(
     "/",
     protect,

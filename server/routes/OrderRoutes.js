@@ -40,9 +40,10 @@ orderRoute.post(
 );
 
 // Get all orders
-// ** PROTECT THIS LATER!! **
 orderRoute.get(
   "/all",
+  protect,
+  admin,
   asyncHandler(async (req, res) => {
     const orders = await Order.find({})
       .sort({ _id: -1 })
