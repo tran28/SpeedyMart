@@ -142,6 +142,7 @@ userRoute.get(
         name: user.name,
         email: user.email,
         isAdmin: user.isAdmin,
+        address: user.address,
         cart: user.cart,
       });
     } else {

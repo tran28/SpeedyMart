@@ -34,7 +34,9 @@ function NavBar(props) {
     }
 
     const handleCheckout = () => {
-        navigate('/checkout')
+        navigate('/checkout');
+        closeCart();
+        closeMenu();
     }
 
     // M: 'axios' call to get the user's cart

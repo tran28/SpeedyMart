@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from "react";
 import "./checkout.css"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import 'font-awesome/css/font-awesome.min.css';
 
 
 function Checkout() {
@@ -27,14 +29,61 @@ function Checkout() {
             .catch(function (err) {
                 console.log(err);
             });
-    }, [items])
-    console.log(items)
+    }, [])
+
+
+    // handleSubmit function to be used when <form></form> block onSubmit={} is called
+    const handleSubmit = e => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        console.log(e.target.fname.value);
+        /*
+        // validate form
+        const isValid = validate();
+        if (isValid) {
+            var axios = require('axios');
+            var data = JSON.stringify({
+                "name": name,
+                "email": email,
+                "password": password,
+            });
+
+            var config = {
+                method: 'post',
+                url: '/api/users/',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: data
+            };
+
+            axios(config)
+                .then(res => {
+                    console.log(res.data);
+                    navigate("/account/login");
+                })
+                .catch(err => {
+                    console.log(err)
+                });
+        }
+        else {
+            console.log({
+                message: "missing email and/or password",
+                name,
+                email,
+                password,
+            })
+        }
+        */
+    }
+    
     return (
         <>
             <div className="check-out-row">
                 <div className="check-out-col-75">
                     <div className="checkout-container">
-                        <form>
+                        <form method="post" id="create_order" onSubmit={handleSubmit}>
                             <div className="check-out-row">
                                 <div className="check-out-col-50">
                                     <h3>Billing Address</h3>
@@ -118,7 +167,7 @@ function Checkout() {
 
                         {items.map((item) => {
                             return (<div key={item.name}>
-                                <p><a href="#">{item.name}</a> x{item.qty} <span className="price">${item.price}</span></p>
+                                <p>{item.name}  x{item.qty} <span className="price">${item.price}</span></p>
                             </div>)
                         })
                         }
