@@ -122,10 +122,10 @@ function NavBar(props) {
                 <div className="cart-container">
                     <div className="cart-top">
                         <div className="cart-header-container">
-                            <h2 className="your-cart-h2">Your Cart</h2>
+                            <h3 className="your-cart-h3">Your Cart</h3>
                             <AiIcons.AiOutlineClose className="cart-close-icon" color="white" size="26px" onClick={closeCart} />
                         </div>
-                        <div className={cartFilled ? "cart-none" : "cart-no-item-message"}>
+                        <div className={cartFilled ? "hidden" : "cart-no-item-message"}>
                             <h3 className="cart-h3-empty">your cart is currently empty.</h3>
                         </div>
                         <div className="cart-items">
@@ -137,10 +137,10 @@ function NavBar(props) {
                             })}
                         </div>
                     </div>
-                    <div className={cartFilled ? "cart-bottom" : "cart-none"}>
+                    <div className={cartFilled ? "cart-bottom" : "hidden"}>
                         <div className="subtotal">
-                            <h2 className="subtotal-h2">Subtotal</h2>
-                            <h2 className="subtotal-h2">${subtotal}</h2>
+                            <h3 className="subtotal-h3">Subtotal</h3>
+                            <h3 className="subtotal-h3">${subtotal}</h3>
                         </div>
                         <div className="ship-tax-container">
                             <h3 className="cart-h3">shipping & taxes calculated at checkout.</h3>
