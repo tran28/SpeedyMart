@@ -1,12 +1,16 @@
 import React, {useEffect, useState} from "react";
 import "./checkout.css"
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import 'font-awesome/css/font-awesome.min.css';
+import { useNavigate } from "react-router-dom";
 
 
-function Checkout() {
+function Checkout(props) {
     const [items, setItems] = useState([])
     const [total, setTotal] = useState(0.0)
+    const [shippingAddress, setShippingAddress] = useState([])
+    const [user, setUser] = useState([])
+
+    let navigate = useNavigate();
     
     useEffect(() => {
         var axios = require('axios');
@@ -20,6 +24,14 @@ function Checkout() {
         };
         axios(config)
             .then(function (res) {
+                // Kick out of address is not defined
+                if (!res.data.address.street) {
+                    //alert('Please provide your address before checkout!\nPress OK to proceed.')
+                    navigate('/account/address')
+                }
+                setShippingAddress(res.data.address);
+                setUser(res.data);
+
                 const {cart} = res.data;
                 setItems(cart)
                 let t = 0
@@ -38,44 +50,118 @@ function Checkout() {
         e.stopPropagation();
 
         console.log(e.target.fname.value);
-        /*
+
+        const validate = () => {
+            let isValid = true;
+            // Valid first name?
+            if (!e.target.fname.value && !user.name) {
+                isValid = false;
+            }
+            // Valid email?
+            if (!e.target.email.value&& !user.email) {
+                isValid = false;
+            }
+            // Valid address?
+            if (!e.target.adr.value&& !shippingAddress.street) {
+                isValid = false;
+            }
+            // Valid city?
+            if (!e.target.city.value&& !shippingAddress.city) {
+                isValid = false;
+            }
+            // Valid province?
+            if (!e.target.state.value&& !shippingAddress.province) {
+                isValid = false;
+            }
+            // Valid postal code?
+            if (!e.target.zip.value&& !shippingAddress.postalCode) {
+                isValid = false;
+            }
+            return isValid;
+        }
+
+        // built in fail
+        if (!localStorage.getItem('customer')){
+            localStorage.setItem('customer',112);
+        }
+        if (parseInt(localStorage.getItem('customer')%3) !== 0) {
+            
         // validate form
         const isValid = validate();
         if (isValid) {
+
             var axios = require('axios');
             var data = JSON.stringify({
-                "name": name,
-                "email": email,
-                "password": password,
+            "orderItems": items,
+            "shippingAddress": shippingAddress,
+            "paymentMethod": "Visa",
+            "itemsPrice": total,
+            "taxPrice": total * 0.13,
+            "totalPrice": total * 1.13
             });
 
             var config = {
-                method: 'post',
-                url: '/api/users/',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                data: data
+            method: 'post',
+            url: '/api/orders',
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem('jwtToken')
+            },
+            data : data
             };
 
             axios(config)
                 .then(res => {
-                    console.log(res.data);
-                    navigate("/account/login");
+                    console.log('Order successful!');
+
+                    // Empty current users cart
+                    var axios = require('axios');
+                    var data = JSON.stringify({
+                    "cart": []
+                    });
+
+                    var config = {
+                    method: 'put',
+                    url: 'api/users/cart',
+                    headers: { 
+                        'Authorization': localStorage.getItem('jwtToken'), 
+                        'Content-Type': 'application/json'
+                    },
+                    data : data
+                    };
+
+                    axios(config)
+                    .then(function (response) {
+                        // increment count
+                        localStorage.setItem('customer', parseInt(localStorage.getItem('customer')) + 1)
+                        
+                        props.setCartUpdate(!props.cartUpdate);
+                        alert("Thank you for your purchase at SpeedyMart!");
+                    console.log(JSON.stringify(response.data));
+                    })
+                    .catch(function (error) {
+                    console.log(error);
+                    });
+
+
+                    navigate("/");
                 })
                 .catch(err => {
+                    console.log('Order failed!');
                     console.log(err)
                 });
         }
         else {
-            console.log({
-                message: "missing email and/or password",
-                name,
-                email,
-                password,
-            })
+            alert("Please enter missing information.")
         }
-        */
+
+    }else {
+        console.log("Order failed!");
+        // increment count
+        localStorage.setItem('customer', parseInt(localStorage.getItem('customer')) + 1)
+        alert('Transaction has failed! Please try again');
+    }
+        
     }
     
     return (
@@ -90,30 +176,30 @@ function Checkout() {
                                     <label className="checkout-label" htmlFor="fname"><i
                                         className="fa fa-user"></i> Full Name</label>
                                     <input className="checkout-input" type="text" id="fname" name="firstname"
-                                           placeholder="John M. Doe"/>
+                                           placeholder={user.name || "John M. Doe"}/>
                                     <label className="checkout-label" htmlFor="email"><i
                                         className="fa fa-envelope"></i> Email</label>
                                     <input className="checkout-input" type="text" id="email" name="email"
-                                           placeholder="john@example.com"/>
+                                           placeholder={user.email || "john@example.com"}/>
                                     <label className="checkout-label" htmlFor="adr"><i
                                         className="fa fa-address-card-o"></i> Address</label>
                                     <input className="checkout-input" type="text" id="adr" name="address"
-                                           placeholder="542 W. 15th Street"/>
+                                           placeholder={shippingAddress.street || "123 Sample st"}/>
                                     <label className="checkout-label" htmlFor="city"><i
                                         className="fa fa-institution"></i> City</label>
                                     <input className="checkout-input" type="text" id="city" name="city"
-                                           placeholder="New York"/>
+                                           placeholder={shippingAddress.city || "Toronto"}/>
 
                                     <div className="check-out-row">
                                         <div className="check-out-col-50">
-                                            <label className="checkout-label" htmlFor="state">State</label>
+                                            <label className="checkout-label" htmlFor="state">Province</label>
                                             <input className="checkout-input" type="text" id="state" name="state"
-                                                   placeholder="Ont"/>
+                                                   placeholder={shippingAddress.province || "Ontario"}/>
                                         </div>
                                         <div className="check-out-col-50">
-                                            <label className="checkout-label" htmlFor="zip">Zip</label>
+                                            <label className="checkout-label" htmlFor="zip">Postal Code</label>
                                             <input className="checkout-input" type="text" id="zip" name="zip"
-                                                   placeholder="10001"/>
+                                                   placeholder={shippingAddress.postalCode || "A1B 2C3"}/>
                                         </div>
                                     </div>
                                 </div>
@@ -129,7 +215,7 @@ function Checkout() {
                                     </div>
                                     <label className="checkout-label" htmlFor="cname">Name on Card</label>
                                     <input className="checkout-input" type="text" id="cname" name="cardname"
-                                           placeholder="John More Doe"/>
+                                           placeholder={user.name || "John More Doe"}/>
                                     <label className="checkout-label" htmlFor="ccnum">Credit card number</label>
                                     <input className="checkout-input" type="text" id="ccnum" name="cardnumber"
                                            placeholder="1111-2222-3333-4444"/>
