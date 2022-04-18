@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import * as FaIcons from "react-icons/fa"
 import * as AiIcons from "react-icons/ai"
 import "./header.css"
@@ -11,6 +11,7 @@ function NavBar(props) {
     const [subtotal, setSubtotal] = useState(0);
     const [cartFilled, setCartFilled] = useState(false);
     const [cart, setCart] = useState([]);
+    const navigate = useNavigate()
 
     /* M: useState to control menu icon click */
     const handleMenuClick = () => {
@@ -68,6 +69,11 @@ function NavBar(props) {
                 console.log(err);
             });
     }, [props.cartUpdate]);
+
+    const onCheckOut = () => {
+        console.log("Called")
+        navigate("/checkout")
+    }
 
     return (
         <>
@@ -150,7 +156,7 @@ function NavBar(props) {
                         <div className="ship-tax-container">
                             <h3 className="cart-h3">shipping & taxes calculated at checkout.</h3>
                         </div>
-                        <button className="check-out-button">Check out</button>
+                        <button className="check-out-button" onClick={onCheckOut}>Check out</button>
                     </div>
                 </div>
             </nav>
