@@ -70,8 +70,10 @@ app.get('/logs', function(req,res){
 
   s3.listObjects(params, function(err, data){
     if (err) return console.log(err);
+    // Only get the latest files
+    const selected = data.Contents.slice(-8);
 
-    async.eachSeries(data.Contents, function(fileObj, callback){
+    async.eachSeries(selected, function(fileObj, callback){
       var key = fileObj.Key;
       //console.log('Downloading: ' + key);
 
@@ -86,7 +88,7 @@ app.get('/logs', function(req,res){
         } else {
           // Read the file
           var contents = fileContents.Body.toString();
-            output += contents.replaceAll("**",'\n');
+          output += contents.replaceAll("**",'\n');
           callback();
         }
       });
