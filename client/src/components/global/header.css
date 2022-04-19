@@ -168,6 +168,11 @@ body {
     overflow: scroll;
 }
 
+.cart-items::-webkit-scrollbar{
+    width: 0;
+    height: 0;
+}
+
 .cart-bottom {
     border-top: 0.2em white solid;
     margin-bottom: 1.2em;

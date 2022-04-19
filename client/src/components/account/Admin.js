@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import "./admin.css"
+import OrdersView from "./SystemOrdersView";
 import UsersView from "./UsersView";
 
 function Admin() {
     const [logs, setLogs] = useState([]);
     const [users, setUsers] = useState([]);
     const [inventory, setInventory] = useState([]);
+    const [allOrders, setAllOrders] = useState([]);
 
     useEffect(() => {
         var axios = require('axios');
@@ -54,7 +56,23 @@ function Admin() {
         axios(config3)
             .then(function (res) {
                 setInventory(res.data);
-                //console.log(res.data);
+            })
+            .catch(function (err) {
+                console.log(err);
+            });
+
+        var config4 = {
+            method: 'get',
+            url: '/api/orders/all',
+            headers: {
+                'Authorization': localStorage.getItem("jwtToken"),
+                'Content-Type': 'application/json'
+            },
+        };
+
+        axios(config4)
+            .then(function (res) {
+                setAllOrders(res.data)
             })
             .catch(function (err) {
                 console.log(err);
@@ -73,24 +91,25 @@ function Admin() {
         if (qty) {
             var axios = require('axios');
             var data = JSON.stringify({
-            "countInStock": qty
+                "countInStock": qty
             });
 
             var config = {
-            method: 'put',
-            url: '/api/products/' + id,
-            headers: { 
-                'Content-Type': 'application/json'
-            },
-            data : data
+                method: 'put',
+                url: '/api/products/' + id,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: data
             };
             axios(config)
-            .then(function (response) {
-                console.log("updated qty: " + JSON.stringify(response.data.countInStock));
-            })
-            .catch(function (error) {
-            console.log(error);
-            });
+                .then(function (response) {
+                    console.log("updated qty: " + JSON.stringify(response.data.countInStock));
+                    alert("Stock updated!")
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
         }
 
     }
@@ -100,7 +119,7 @@ function Admin() {
             <div className="main-container">
                 <div className="boxes">
 
-                    <h1>Inventory | System Stats | Access Logs </h1>
+                    <h1 className="admin-h1">Admin Page</h1>
 
                     {/* M: Inventory */}
                     <div className="box">
@@ -114,24 +133,18 @@ function Admin() {
                                 {inventory.map((item) => {
                                     return (
                                         <>
-                                        <form onSubmit={handleSubmit}>
-                                        <br/>
-                                            {JSON.stringify(item.name)} <br/>
-                                            Current quantity:
-                                                <input
-                                                type="text" id="qty" name="qty"
-                                                placeholder={item.countInStock}
-                                                onKeyPress={(event) => {
-                                                    if (!/[0-9]/.test(event.key)) {
-                                                    event.preventDefault();
-                                                    }
-                                                }}
-                                                />
-                                                <input type="submit" value="Update" className="update-button"/>
-                                                {/* Ghetto way to get the item._id into the form submit */}
-                                                <input type="text" id="id" name="id" placeholder={item._id} className="update-button-hide"/>
+                                            <form onSubmit={handleSubmit}>
+                                                <p className="admin-p name">{item.name}</p>
+                                                <p className="admin-p">Current quantity:&nbsp;
+                                                    <input className="stock-input" type="text" id="qty" name="qty" placeholder={item.countInStock} onKeyPress={(event) => {
+                                                        if (!/[0-9]/.test(event.key)) {
+                                                            event.preventDefault();
+                                                        }
+                                                    }} />
+                                                    <input type="submit" value="Update" className="update-button" />
+                                                    {/* Ghetto way to get the item._id into the form submit */}
+                                                    <input type="text" id="id" name="id" placeholder={item._id} className="hidden" /></p>
                                             </form>
-                                            <br/>
                                             <div className="separator"></div>
                                         </>
                                     )
@@ -140,14 +153,15 @@ function Admin() {
                         </div>
                     </div>
 
-                    {/* M: All Users */}
+                    {/* M: System Stats */}
                     <div className="box">
                         <div className="left-admin">
                             <h2>System Stats</h2>
                         </div>
                         <div className="right-admin">
+                            {/* M: SpeedyMart Users */}
                             <h3>SpeedyMart Users</h3>
-                            <h3 className="h3-small">displays all users</h3>
+                            <h3 className="h3-small">display all users</h3>
                             <div className="display-container">
                                 {users.map((item) => {
                                     return (
@@ -155,13 +169,24 @@ function Admin() {
                                     )
                                 })}
                             </div>
+
+                            {/* M: SpeedyMart Orders */}
+                            <h3>SpeedyMart Orders</h3>
+                            <h3 className="h3-small">display all orders</h3>
+                            <div className="display-container">
+                                {allOrders.map((item) => {
+                                    return (
+                                        <OrdersView key={item._id} {...item}></OrdersView>
+                                    )
+                                })}
+                            </div>
                         </div>
                     </div>
 
-                    {/* M: Admin Logs */}
+                    {/* M: Access Logs */}
                     <div className="box">
                         <div className="left-admin">
-                            <h2>Admin Logs</h2>
+                            <h2>Access Logs</h2>
                         </div>
                         <div className="right-admin">
                             <h3>(please allow a few seconds to load)</h3>

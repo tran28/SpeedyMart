@@ -1,4 +1,4 @@
-.display-container{
+.display-container {
     height: 70vh;
     overflow: scroll;
     background: var(--light);
@@ -6,7 +6,7 @@
     padding: 1em;
 }
 
-.h3-small{
+.h3-small {
     font-size: 1em;
     color: var(--dark);
     padding-bottom: 2em;
@@ -25,22 +25,66 @@
     text-align: left;
 }
 
-pre{
+pre {
     font-family: var(--menlo-altfont);
     font-size: 0.8em;
     color: var(--dark);
 }
 
-.plain{
+.plain {
     font-family: var(--menlo-altfont);
     font-size: 0.8em;
     color: var(--dark);
 }
 
-.separator{
+.separator {
     width: 100%;
     height: 3px;
     background: var(--accent);
+}
+
+.admin-h1 {
+    font-family: var(--daytona-altfont);
+    color: var(--dark);
+}
+
+.stock-input {
+    border: 3px var(--dark) solid;
+    padding: 0.2em 0.3em 0.2em 0.3em;
+    font-family: var(--menlo-altfont);
+    font-size: 1em;
+}
+
+.update-button {
+    border: 3px var(--dark) solid;
+    background: var(--dark);
+    padding: 0.2em 0.3em 0.2em 0.3em;
+    color: white;
+    font-family: var(--menlo-altfont);
+    font-weight: bold;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.update-button:hover {
+    background: var(--light);
+    color: var(--dark);
+}
+
+.admin-p {
+    font-family: var(--menlo-altfont);
+}
+
+.name {
+    font-weight: bold;
+}
+
+.indent {
+    padding-left: 2em;
+}
+
+.container-dark {
+    background: var(--backdrop-dark);
 }
 
 @media screen and (min-width: 720px) {
@@ -57,18 +101,4 @@ pre{
         height: 100%;
         padding: 2em 2em 2em 6em;
     }
-}
-
-.update-button {
-    border: 3px var(--dark) solid;
-    background: var(--dark);
-    padding: 0.2em 0.3em 0.2em 0.3em;
-    color: white;
-    font-family: var(--menlo-altfont);
-    font-weight: bold;
-    font-size: 0.8em;
-}
-
-.update-button-hide {
-    display: none;
 }

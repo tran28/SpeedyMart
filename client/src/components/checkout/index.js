@@ -11,7 +11,7 @@ function Checkout(props) {
     const [user, setUser] = useState([])
 
     const successMessage = "Thank you for your purchase at SpeedyMart!"
-    const failedMessage = "Transaction has failed! Please try again"
+    const failedMessage = "Transaction has failed! Please try again."
 
     let navigate = useNavigate();
 

@@ -3,6 +3,7 @@ function UsersView(props) {
         <>
             <p className="plain">_id: {JSON.stringify(props._id)}</p>
             <p className="plain">name: {JSON.stringify(props.name)}</p>
+            <p className="plain">email: {JSON.stringify(props.email)}</p>
             <p className="plain">isAdmin: {JSON.stringify(props.isAdmin)}</p>
             <p className="plain">createdAt: {JSON.stringify(props.createdAt)}</p>
             <div className="separator"></div>
