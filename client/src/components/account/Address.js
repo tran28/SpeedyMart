@@ -71,7 +71,7 @@ function Address() {
 
             var config = {
                 method: 'put',
-                url: 'http://localhost:5001/api/users/profile',
+                url: '/api/users/profile',
                 headers: {
                     'Authorization': localStorage.getItem("jwtToken"),
                     'Content-Type': 'application/json'
