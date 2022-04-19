@@ -58,9 +58,8 @@
     border-radius: 3px;
 }
 
-.autofill {
-    color: var(--dark);
-    background: #e7f0fe;
+.unfill{
+    background: white;
 }
 
 .checkout-label {

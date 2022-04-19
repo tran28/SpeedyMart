@@ -111,6 +111,7 @@ function Account() {
               <h2>Your Orders</h2>
             </div>
             <div className="right">
+              <h3 className={orders.length === 0 ? "" : "hidden"}>no orders yet, start shopping!</h3>
               {orders.map((item) => {
                 return (
                   <OrderView key={item._id} {...item} />

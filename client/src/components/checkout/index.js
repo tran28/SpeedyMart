@@ -178,25 +178,25 @@ function Checkout(props) {
                                     <h3>Billing Address</h3>
                                     <label className="checkout-label" htmlFor="fname"><i
                                         className="fa fa-user"></i> Full Name</label>
-                                    <input className="checkout-input autofill" type="text" id="fname" name="firstname" defaultValue={user.name} readOnly />
+                                    <input className="checkout-input" type="text" id="fname" name="firstname" defaultValue={user.name} readOnly />
                                     <label className="checkout-label" htmlFor="email"><i
                                         className="fa fa-envelope"></i> Email</label>
-                                    <input className="checkout-input autofill" type="text" id="email" name="email" defaultValue={user.email} readOnly />
+                                    <input className="checkout-input" type="text" id="email" name="email" defaultValue={user.email} readOnly />
                                     <label className="checkout-label" htmlFor="adr"><i
                                         className="fa fa-address-card-o"></i> Address</label>
-                                    <input className="checkout-input autofill" type="text" id="adr" name="address" defaultValue={shippingAddress.street} readOnly />
+                                    <input className="checkout-input" type="text" id="adr" name="address" defaultValue={shippingAddress.street} readOnly />
                                     <label className="checkout-label" htmlFor="city"><i
                                         className="fa fa-institution"></i> City</label>
-                                    <input className="checkout-input autofill" type="text" id="city" name="city" defaultValue={shippingAddress.city} readOnly />
+                                    <input className="checkout-input" type="text" id="city" name="city" defaultValue={shippingAddress.city} readOnly />
 
                                     <div className="check-out-row">
                                         <div className="check-out-col-50">
                                             <label className="checkout-label" htmlFor="province">Province</label>
-                                            <input className="checkout-input autofill" type="text" id="province" name="province" defaultValue={shippingAddress.province} readOnly />
+                                            <input className="checkout-input" type="text" id="province" name="province" defaultValue={shippingAddress.province} readOnly />
                                         </div>
                                         <div className="check-out-col-50">
                                             <label className="checkout-label" htmlFor="zip">Postal Code</label>
-                                            <input className="checkout-input autofill" type="text" id="zip" name="zip" defaultValue={shippingAddress.postalCode} readOnly />
+                                            <input className="checkout-input" type="text" id="zip" name="zip" defaultValue={shippingAddress.postalCode} readOnly />
                                         </div>
                                     </div>
                                 </div>
@@ -211,23 +211,23 @@ function Checkout(props) {
                                         <i className="fa fa-cc-discover space" style={{ color: "orange" }}></i>
                                     </div>
                                     <label className="checkout-label" htmlFor="cname">Name on Card</label>
-                                    <input className="checkout-input" type="text" id="cname" name="cardname"
+                                    <input className="checkout-input unfill" type="text" id="cname" name="cardname"
                                         placeholder={user.name || "John More Doe"} />
                                     <label className="checkout-label" htmlFor="ccnum">Card Number</label>
-                                    <input className="checkout-input" type="text" id="ccnum" name="cardnumber"
+                                    <input className="checkout-input unfill" type="text" id="ccnum" name="cardnumber"
                                         placeholder="1111-2222-3333-4444" />
                                     <label className="checkout-label" htmlFor="expmonth">Exp Month</label>
-                                    <input className="checkout-input" type="text" id="expmonth" name="expmonth"
+                                    <input className="checkout-input unfill" type="text" id="expmonth" name="expmonth"
                                         placeholder="September" />
 
                                     <div className="check-out-row">
                                         <div className="check-out-col-50">
                                             <label className="checkout-label" htmlFor="expyear">Exp Year</label>
-                                            <input className="checkout-input" type="text" id="expyear" name="expyear" placeholder="2024" />
+                                            <input className="checkout-input unfill" type="text" id="expyear" name="expyear" placeholder="2024" />
                                         </div>
                                         <div className="check-out-col-50">
                                             <label className="checkout-label" htmlFor="cvv">CVV</label>
-                                            <input className="checkout-input" type="text" id="cvv" name="cvv" placeholder="356" />
+                                            <input className="checkout-input unfill" type="text" id="cvv" name="cvv" placeholder="356" />
                                         </div>
                                     </div>
                                 </div>
@@ -246,7 +246,7 @@ function Checkout(props) {
                         {items.map((item) => {
                             return (<div key={item.name} className="checkout-summary-item-container">
                                 <div>
-                                    <p className="checkout-summary-item">{item.name}</p>
+                                    <p className="checkout-summary-item">{item.name} x{item.qty}</p>
                                 </div>
                                 <div>
                                     <p className="checkout-summary-item text-bold">${(item.price * item.qty).toFixed(2)}</p>
