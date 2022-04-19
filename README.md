@@ -5,7 +5,7 @@ EECS4413 Final Project
 - The dependences in `./package.json` must match dependencies in `/server/package.json` otherwise you'll get node module errors in Heroku.
 
 # Curl Commands for test cases
-```
+```javascript
 # Note that not all REST commands could be executed using curl. There were some with user authentication based on Mongoose User Schema verification
 # Create a new order
 curl --location --request POST 'https://speedymart.herokuapp.com/api/orders' \
