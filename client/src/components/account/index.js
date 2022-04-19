@@ -23,9 +23,10 @@ function Account() {
     axios(config)
       .then(res => {
         setData(res.data)
+        console.log(res.data);
+
         const { address } = res.data;
         setAddress(address);
-        console.log(res.data);
       })
 
     var config2 = {
@@ -82,7 +83,8 @@ function Account() {
                 <div className='row'>
                   <p className='user-info'>
                     the default address is&nbsp;
-                    <span className='highlight'>{address.street} {address.unit}<br />in {address.city}, {address.province} {address.postalCode} {address.country}</span>.<br />
+                    <span className={address.street ? 'highlight' : 'hidden'}>{address.street} {address.unit}<br />in {address.city}, {address.province} {address.postalCode} {address.country}</span>
+                    <span className={!address.street ? 'highlight' : 'hidden'}></span>
                   </p>
                 </div>
 

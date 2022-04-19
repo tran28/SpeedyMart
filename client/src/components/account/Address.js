@@ -111,7 +111,7 @@ function Address() {
                             <h2>Your Address</h2>
                         </div>
                         <div className="right">
-                            <h3><b>Please provide us with an address before proceeding with checkout!</b></h3>
+                            <h3>please provide us with an address before proceeding with checkout</h3>
                             <div className="row">
                                 <form method="post" id="create_customer" onSubmit={handleSubmit}>
                                     {/* M: This is the 'Street' input */}
