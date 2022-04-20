@@ -84,11 +84,6 @@ function Shop() {
                                     </optgroup>
                                 </select>
                             </div>
-                            <div className="shop-button-wrapper">
-                                {/*<button className="shop-button" onClick={filterProducts}>
-                                    <span>Load Catalogue</span>
-                                    </button>*/}
-                            </div>
                         </div>
 
                         <div className="shop-right">

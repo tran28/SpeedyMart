@@ -1,11 +1,14 @@
 .check-out-row {
     padding: 15px;
-    display: -ms-flexbox; /* IE10 */
+    display: -ms-flexbox;
+    /* IE10 */
     display: inline;
-    -ms-flex-wrap: wrap; /* IE10 */
+    -ms-flex-wrap: wrap;
+    /* IE10 */
     flex-wrap: wrap;
     margin: 0 -16px;
 }
+
 .icon-container {
     margin-bottom: 20px;
     padding: 7px 0;
@@ -19,7 +22,8 @@
 }
 
 .check-out-col-50 {
-    -ms-flex: 50%; /* IE10 */
+    -ms-flex: 50%;
+    /* IE10 */
     flex: 50%;
     width: 40%;
     display: inline-block;
@@ -38,14 +42,15 @@
 }
 
 .checkout-container {
-    background-color: #f2f2f2;
+    background-color: var(--light);
     padding: 5px 20px 15px 20px;
-    border: 1px solid lightgrey;
+    border: 2px solid var(--dark);
     display: block;
-    border-radius: 3px;
+    border-radius: 0.4em;
 }
 
 .checkout-input {
+    font-family: var(--menlo-altfont);
     width: 100%;
     margin-bottom: 20px;
     padding: 12px;
@@ -53,7 +58,13 @@
     border-radius: 3px;
 }
 
-checkout-label {
+.unfill{
+    background: white;
+}
+
+.checkout-label {
+    font-family: var(--menlo-altfont);
+    color: var(--dark);
     margin-bottom: 10px;
     display: block;
 }
@@ -79,15 +90,29 @@ checkout-label {
     background-color: #45a049;
 }
 
-span.price {
-    float: right;
-    color: grey;
+.checkout-summary-item-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.checkout-summary-item {
+    margin: 0.5em;
+    font-family: var(--menlo-altfont);
+    font-size: 1em;
+    color: var(--dark);
+}
+
+.text-bold {
+    font-weight: bold;
+}
+
+.space {
+    margin-right: 0.2em;
 }
 
 .myBtn {
-    font-size: 14px;
-    padding: 6px 12px;
-    margin-bottom: 0;
+    font-size: 1em;
+    font-family: var(--menlo-altfont);
 
     display: inline-block;
     text-decoration: none;
@@ -104,17 +129,20 @@ span.price {
     background-image: none;
     border: 1px solid transparent;
 }
+
 .myBtn:focus,
 .myBtn:active:focus {
     outline: thin dotted;
     outline: 5px auto -webkit-focus-ring-color;
     outline-offset: -2px;
 }
+
 .myBtn:hover,
 .myBtn:focus {
     color: #333;
     text-decoration: none;
 }
+
 .myBtn:active {
     background-image: none;
     outline: 0;
@@ -122,35 +150,12 @@ span.price {
     box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
 }
 
-/* default
----------------------------- */
-.myBtn-default {
-    color: #333;
-    background-color: #fff;
-    border-color: #ccc;
-}
-.myBtn-default:focus {
-    color: #333;
-    background-color: #e6e6e6;
-    border-color: #8c8c8c;
-}
-.myBtn-default:hover {
-    color: #333;
-    background-color: #e6e6e6;
-    border-color: #adadad;
-}
-.myBtn-default:active {
-    color: #333;
-    background-color: #e6e6e6;
-    border-color: #adadad;
-}
-
-
 /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (and change the direction - make the "cart" column go on top) */
 @media (max-width: 800px) {
     .check-out-row {
         flex-direction: column-reverse;
     }
+
     .check-out-col-25 {
         margin-bottom: 20px;
     }
