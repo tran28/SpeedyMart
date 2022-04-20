@@ -81,10 +81,13 @@ function Account() {
 
                 {/* M: Display account 'address'*/}
                 <div className='row'>
-                  <p className='user-info'>
+                  <p className={address.street ? 'user-info' : 'hidden'}>
                     the default address is&nbsp;
                     <span className={address.street ? 'highlight' : 'hidden'}>{address.street} {address.unit}<br />in {address.city}, {address.province} {address.postalCode} {address.country}</span>
                     <span className={!address.street ? 'highlight' : 'hidden'}></span>
+                  </p>
+                  <p className={!address.street ? 'user-info' : 'hidden'}>
+                    no saved addresses&nbsp;
                   </p>
                 </div>
 

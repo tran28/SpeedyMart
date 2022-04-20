@@ -11,6 +11,7 @@ function NavBar(props) {
     const [subtotal, setSubtotal] = useState(0);
     const [cartFilled, setCartFilled] = useState(false);
     const [cart, setCart] = useState([]);
+    const [isAdmin, setIsAdmin] = useState(false);
 
     let navigate = useNavigate();
 
@@ -52,6 +53,15 @@ function NavBar(props) {
         };
         axios(config)
             .then(function (res) {
+                //check is admin
+                //console.log(res.data.isAdmin)
+                if (res.data.isAdmin) {
+                    if(!isAdmin){
+                        setIsAdmin(true);
+                    }
+                }
+                //console.log(isAdmin)
+
                 const { cart } = res.data;
                 setCart(cart);
 
@@ -90,7 +100,9 @@ function NavBar(props) {
                         SpeedyMart
                     </Link>
 
+
                     <div className="nav-right">
+
                         {/* M: Navbar account*/}
                         <Link to="/account">
                             <FaIcons.FaUserCircle className="account-icon" color="#2e343a" size="24px" />
@@ -123,6 +135,13 @@ function NavBar(props) {
                             account
                         </Link>
                     </li>
+                    {isAdmin ? 
+                    <li className="nav-item">
+                        <Link to="/admin" className="nav-links" onClick={closeMenu}>
+                            admin
+                        </Link>
+                    </li>
+                    : null}
                 </ul>
             </nav>
 
