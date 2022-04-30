@@ -21,6 +21,7 @@ var BUCKET = 'speedymart';
 var PREFIX = 'logs';
 AWS.config.update({accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY});
 
+/*
 // For sending logs to aws s3 bucket
 var s3stream = new S3StreamLogger({
   bucket: "speedymart",
@@ -28,6 +29,7 @@ var s3stream = new S3StreamLogger({
   access_key_id: process.env.AWS_ACCESS_KEY_ID,
   secret_access_key: process.env.AWS_SECRET_ACCESS_KEY
 });
+*/
 
 // Morgan logger
 app.use(logger(':remote-addr :remote-user [:date[clf]] :method :url :status :res[content-length] - :response-time ms **', {
@@ -59,6 +61,7 @@ app.get('/loaderio-3a70303fad2057ab6e91ee83d9cade1f', function(req,res){
   res.sendFile(__dirname + '/loaderio-3a70303fad2057ab6e91ee83d9cade1f.txt');
  }); 
 
+/*
 // Get logs from s3 bucket
 app.get('/logs', function(req,res){
   var output = "";
@@ -104,6 +107,7 @@ app.get('/logs', function(req,res){
 
   
  }); 
+ */
 
 // All remaining requests return the React app, so it can handle routing.
 app.get('*', function(request, response) {
